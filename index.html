@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TEAM SMG</title>
+<script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.1/dist/framer-motion.umd.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    body { font-family: "Pretendard Variable", "SUIT", "Noto Sans KR", sans-serif; }
+    .hidden-section { display: none; }
+    .active-section { display: block; }
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=SUIT:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&amp;display=swap" rel="stylesheet"/></head>
+<body class="text-white min-h-screen px-4 bg-black overflow-x-hidden">
+<header class="bg-black py-5 text-center text-white text-xs md:text-sm tracking-widest font-bold shadow-md sticky top-0 z-50 relative">
+    TEAM SMG
+  </header>
+<main>
+<style>
+    .fade-in {
+      animation: fadeIn 0.8s ease-out both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .home-button {
+      margin-top: 2rem;
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border: 1px solid white;
+      font-size: 0.875rem;
+      transition: opacity 0.3s ease;
+    }
+    .home-button:hover {
+      opacity: 0.7;
+    }
+  </style>
+<div id="main"><section class="py-24 md:py-36 text-center max-w-5xl mx-auto fade-in" id="home">
+<h1 class="text-center font-extrabold mb-4 text-[clamp(2rem,5vw,3.5rem)] leading-tight break-words whitespace-nowrap" style="font-family: 'Pretendard Variable', 'SUIT', 'Noto Sans KR', sans-serif; font-weight: 800; font-size: clamp(1.5rem, 6vw, 3rem);">WELCOME TO TEAM SMG</h1>
+<p class="text-base md:text-lg mb-10 whitespace-nowrap">수원 최고의 MMA 체육관에서 몸과 정신을 단련하세요.</p>
+<div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+<button class="border border-white px-5 py-2 text-sm transition hover:opacity-80 w-40 text-center" onclick="showSection('coach')">강사 소개</button>
+<button class="border border-white px-5 py-2 text-sm transition hover:opacity-80 w-40 text-center" onclick="showSection('schedule')">수업 시간표</button>
+<button class="border border-white px-5 py-2 text-sm transition hover:opacity-80 w-40 text-center" onclick="showSection('map')">오시는 길</button>
+</div>
+<div class="text-center"></div>
+</section></div>
+<section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="coach">
+<h2 class="text-4xl font-bold mb-4">코치진 소개</h2>
+<p class="text-sm">국내외 프로 출신 코치진을 소개합니다.</p>
+<button class="home-button" onclick="showSection('home')">홈으로</button>
+</section>
+<section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="schedule"><h2 class="text-4xl font-bold mb-8 text-center">수업 시간표</h2><p class="text-sm text-center mb-12">요일별 운영 시간입니다.</p><ul class="space-y-4 max-w-md mx-auto text-sm text-left"><li class="border border-white/20 p-4 rounded-lg bg-black/40"><strong class="block text-white text-base mb-1">월요일</strong><p class="text-white/90">오전 10:30, 오후 9:20</p></li><li class="border border-white/20 p-4 rounded-lg bg-black/40"><strong class="block text-white text-base mb-1">화요일</strong><p class="text-white/90">오후 9:20</p></li><li class="border border-white/20 p-4 rounded-lg bg-black/40"><strong class="block text-white text-base mb-1">수요일</strong><p class="text-white/90">오전 10:30, 오후 9:20</p></li><li class="border border-white/20 p-4 rounded-lg bg-black/40"><strong class="block text-white text-base mb-1">목요일</strong><p class="text-white/90">오후 9:20</p></li><li class="border border-white/20 p-4 rounded-lg bg-black/40"><strong class="block text-white text-base mb-1">금요일</strong><p class="text-white/90">오전 10:30, 오후 9:20</p></li></ul><a class="mt-12 block text-center border border-white px-5 py-2 text-sm transition hover:opacity-80 w-full max-w-xs mx-auto" href="#main">홈으로</a></section>
+<section class="hidden-section fade-in py-24 px-4 max-w-5xl mx-auto" id="map">
+<h2 class="text-4xl font-bold mb-6 text-center">오시는 길</h2>
+<div class="w-full h-96">
+<iframe allowfullscreen="" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
+</div>
+<div class="text-center"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+</section>
+</main>
+<script>
+    function showSection(id) {
+      ['home', 'coach', 'schedule', 'map'].forEach(sec => {
+        document.getElementById(sec).classList.add('hidden-section');
+        document.getElementById(sec).classList.remove('active-section');
+      });
+      document.getElementById(id).classList.remove('hidden-section');
+      document.getElementById(id).classList.add('active-section');
+    }
+  </script>
+</body>
+</html>
