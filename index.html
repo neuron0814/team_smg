@@ -9,11 +9,19 @@
 <style>
 body, html { margin:0; padding:0; overflow-x:hidden; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#111; color:white; }
 .section-wrapper { position:relative; width:100%; height:100vh; overflow:hidden; }
-.video-section, .ui-section { position:absolute; top:0; left:0; width:100%; height:100vh; display:flex; justify-content:center; align-items:center; transition: transform 0.8s ease, opacity 0.8s ease; }
+
+.video-section, .ui-section {
+  position:absolute; top:0; left:0; width:100%; height:100vh;
+  display:flex; justify-content:center; align-items:center; transition: transform 0.8s ease, opacity 0.8s ease;
+}
 .video-section video { width:100%; height:100%; object-fit:cover; }
+
+.video-section.enter, .ui-section.enter { opacity:1; transform:translateY(0); pointer-events:auto; }
+.video-section.leave { opacity:0; transform:translateY(-50px); pointer-events:none; }
+.ui-section.leave { opacity:0; transform:translateY(50px); pointer-events:none; }
+
 .ui-section { flex-direction:column; padding:2rem; overflow:hidden; background:#111; }
-.hidden { opacity:0; pointer-events:none; }
-.active { opacity:1; pointer-events:auto; }
+
 .card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4); margin-bottom:1rem; }
 .tab-button { display:flex; justify-content:center; align-items:center; gap:0.5rem; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; color:white; background:transparent; cursor:pointer; transition:all 0.3s; }
 .tab-button.active { background:white; color:black; font-weight:600; }
@@ -21,6 +29,8 @@ body, html { margin:0; padding:0; overflow-x:hidden; font-family:"Pretendard Var
 .home-button:hover { opacity:0.7; }
 .arrow { position:absolute; bottom:env(safe-area-inset-bottom,20px); left:50%; transform:translateX(-50%) rotate(90deg); font-size:3rem; color:white; cursor:pointer; opacity:0; transition:opacity 0.5s; z-index:10; }
 section { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
+.hidden { opacity:0; pointer-events:none; }
+.active { opacity:1; pointer-events:auto; }
 </style>
 </head>
 <body>
@@ -28,7 +38,7 @@ section { width:100%; display:flex; flex-direction:column; align-items:center; j
 <div class="section-wrapper">
 
   <!-- Video Section -->
-  <div class="video-section active" id="video-section">
+  <div class="video-section enter" id="video-section">
     <video autoplay muted loop playsinline>
       <source src="video.mp4" type="video/mp4">
     </video>
@@ -36,7 +46,7 @@ section { width:100%; display:flex; flex-direction:column; align-items:center; j
   </div>
 
   <!-- UI Section -->
-  <div class="ui-section hidden" id="ui-section">
+  <div class="ui-section leave" id="ui-section">
 
     <!-- Home -->
     <section id="home">
@@ -117,30 +127,39 @@ const uiSection = document.getElementById('ui-section');
 
 let switched = false;
 
-window.addEventListener('wheel', (e)=>{
-  if(e.deltaY > 0 && !switched){
+// 섹션 전환 애니메이션
+function switchSection(toUI){
+  if(toUI && !switched){
     switched = true;
-    videoSection.classList.remove('active'); videoSection.classList.add('hidden');
-    uiSection.classList.remove('hidden'); uiSection.classList.add('active');
-  } else if(e.deltaY < 0 && switched){
+    videoSection.classList.remove('enter'); videoSection.classList.add('leave');
+    uiSection.classList.remove('leave'); uiSection.classList.add('enter');
+  } else if(!toUI && switched){
     switched = false;
-    uiSection.classList.remove('active'); uiSection.classList.add('hidden');
-    videoSection.classList.remove('hidden'); videoSection.classList.add('active');
+    uiSection.classList.remove('enter'); uiSection.classList.add('leave');
+    videoSection.classList.remove('leave'); videoSection.classList.add('enter');
   }
+}
+
+window.addEventListener('wheel', (e)=>{
+  if(e.deltaY>0) switchSection(true);
+  else switchSection(false);
 });
 
-scrollArrow.addEventListener('click', ()=>{ 
-  switched = true;
-  videoSection.classList.remove('active'); videoSection.classList.add('hidden');
-  uiSection.classList.remove('hidden'); uiSection.classList.add('active');
-});
+scrollArrow.addEventListener('click', ()=>{ switchSection(true); });
+
+// Framer Motion 탭 애니메이션
+const { motion } = window['framer-motion'];
 
 function showTab(id, btn){
-  document.querySelectorAll('#ui-section > section').forEach(sec=>{
-    sec.classList.add('hidden'); sec.classList.remove('active');
+  const sections = document.querySelectorAll('#ui-section > section');
+  sections.forEach(sec => {
+    if(sec.id !== id) sec.classList.add('hidden');
   });
   const target = document.getElementById(id);
-  if(target){ target.classList.remove('hidden'); target.classList.add('active'); }
+  if(target){
+    target.classList.remove('hidden');
+    motion(target).animate({ opacity: [0,1], y: [20,0] }, { duration: 0.5 });
+  }
   document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
 }
