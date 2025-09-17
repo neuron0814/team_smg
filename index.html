@@ -211,6 +211,22 @@
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
     }
+
+    // 페이지 스크롤시 UI 섹션 나타나기
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY;
+      if (scrollPos > window.innerHeight / 2) {
+        document.getElementById('scroll-arrow').style.opacity = 1; // 화살표 표시
+      } else {
+        document.getElementById('scroll-arrow').style.opacity = 0; // 화살표 숨기기
+      }
+
+      // UI 섹션 활성화
+      const uiSection = document.getElementById('ui');
+      if (scrollPos > window.innerHeight / 1.5) {
+        uiSection.classList.add('active');
+      }
+    });
   </script>
 </body>
 </html>
