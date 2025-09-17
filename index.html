@@ -45,6 +45,7 @@ body { margin:0; font-family: "Pretendard Variable","SUIT","Noto Sans KR",sans-s
 <div class="ui-container" id="ui-container">
   <main class="min-h-screen">
 
+    <!-- Home -->
     <section class="active-section py-24 md:py-36 text-center max-w-5xl mx-auto" id="home">
       <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-extrabold mb-4">WELCOME TO TEAM SMG</h1>
       <p class="text-base md:text-lg mb-10">MMA & Jiu Jitsu in Suwon</p>
@@ -59,7 +60,7 @@ body { margin:0; font-family: "Pretendard Variable","SUIT","Noto Sans KR",sans-s
       <div class="mt-6"><a href="https://www.instagram.com/smgacademy_/" target="_blank" class="text-sm hover:underline">인스타그램 @smgacademy_</a></div>
     </section>
 
-    <!-- 이하 각 섹션 (coach, schedule, price, facility, map, trial) 동일 구조 유지 -->
+    <!-- Coach -->
     <section class="hidden-section py-24 px-4 max-w-4xl mx-auto text-center" id="coach">
       <h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
       <div class="card mt-6 inline-block">
@@ -69,6 +70,7 @@ body { margin:0; font-family: "Pretendard Variable","SUIT","Noto Sans KR",sans-s
       <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
     </section>
 
+    <!-- Schedule -->
     <section class="hidden-section py-24 px-4 max-w-4xl mx-auto text-center" id="schedule">
       <h2 class="text-4xl font-bold mb-8 border-b border-white/20 pb-2">수업 시간표</h2>
       <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-left text-sm">
@@ -81,7 +83,45 @@ body { margin:0; font-family: "Pretendard Variable","SUIT","Noto Sans KR",sans-s
       <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
     </section>
 
-    <!-- price, facility, map, trial 섹션도 동일하게 hidden-section 클래스 적용 -->
+    <!-- Price -->
+    <section class="hidden-section py-24 px-4 max-w-4xl mx-auto text-center" id="price">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
+      <ul class="max-w-md mx-auto space-y-4 text-left text-sm">
+        <li class="card"><strong class="block mb-1">1개월</strong><p class="text-white/90">15만원</p></li>
+        <li class="card"><strong class="block mb-1">3개월</strong><p class="text-white/90">14만원 (월)</p></li>
+        <li class="card"><strong class="block mb-1">6개월</strong><p class="text-white/90">13만원 (월)</p></li>
+      </ul>
+      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+    </section>
+
+    <!-- Facility -->
+    <section class="hidden-section py-24 px-4 max-w-4xl mx-auto text-center" id="facility">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
+      <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
+        <div class="card"><h3 class="text-xl font-semibold mb-2">트레이닝 매트</h3><p class="text-sm text-white/80">청결하게 관리되는 넓은 매트 공간에서 안전하게 훈련할 수 있습니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">샤워 시설</h3><p class="text-sm text-white/80">운동 후 상쾌하게 마무리할 수 있도록 샤워실을 제공합니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">웨이트 장비</h3><p class="text-sm text-white/80">보강 훈련을 위한 기본적인 웨이트 기구를 갖추고 있습니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">휴게 공간</h3><p class="text-sm text-white/80">회원들이 편하게 쉴 수 있는 휴게 공간을 마련했습니다.</p></div>
+      </div>
+      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+    </section>
+
+    <!-- Map -->
+    <section class="hidden-section py-24 px-4 max-w-5xl mx-auto" id="map">
+      <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
+      <div class="w-full h-96 mb-6">
+        <iframe allowfullscreen title="지도" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
+      </div>
+      <p class="text-center text-sm text-white/90 mb-6">경기 수원시 장안구 만석로19번길 11-7 306호 수원멀티짐</p>
+      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+    </section>
+
+    <!-- Trial -->
+    <section class="hidden-section py-24 px-4 max-w-4xl mx-auto text-center" id="trial">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
+      <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
+      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+    </section>
 
   </main>
 </div>
