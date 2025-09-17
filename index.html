@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>TEAM SMG</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.1/dist/framer-motion.umd.js"></script>
@@ -27,7 +27,7 @@ body, html { margin:0; padding:0; overflow-x:hidden; font-family:"Pretendard Var
 .tab-button.active { background:white; color:black; font-weight:600; }
 .home-button { margin-top:1rem; padding:0.5rem 1rem; border:1px solid white; background:transparent; color:white; cursor:pointer; transition:opacity 0.3s; }
 .home-button:hover { opacity:0.7; }
-.arrow { position:absolute; bottom:env(safe-area-inset-bottom,20px); left:50%; transform:translateX(-50%) rotate(90deg); font-size:3rem; color:white; cursor:pointer; opacity:0; transition:opacity 0.5s; z-index:10; }
+.arrow { position:absolute; bottom:calc(env(safe-area-inset-bottom,20px)); left:50%; transform:translateX(-50%) rotate(90deg); font-size:3rem; color:white; cursor:pointer; opacity:0; transition:opacity 0.5s; z-index:10; }
 section { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
 .hidden { opacity:0; pointer-events:none; }
 .active { opacity:1; pointer-events:auto; }
@@ -49,7 +49,7 @@ section { width:100%; display:flex; flex-direction:column; align-items:center; j
   <div class="ui-section leave" id="ui-section">
 
     <!-- Home -->
-    <section id="home">
+    <section id="home" class="active">
       <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-extrabold mb-4">WELCOME TO TEAM SMG</h1>
       <p class="mb-6">MMA & Jiu Jitsu in Suwon</p>
       <div class="flex flex-wrap justify-center gap-3">
@@ -127,7 +127,7 @@ const uiSection = document.getElementById('ui-section');
 
 let switched = false;
 
-// 섹션 전환 애니메이션
+// 섹션 전환 (모바일 스와이프 포함)
 function switchSection(toUI){
   if(toUI && !switched){
     switched = true;
@@ -147,18 +147,27 @@ window.addEventListener('wheel', (e)=>{
 
 scrollArrow.addEventListener('click', ()=>{ switchSection(true); });
 
-// Framer Motion 탭 애니메이션
+// 모바일 스와이프 처리
+let touchStartY = 0;
+window.addEventListener('touchstart', e=>{ touchStartY = e.touches[0].clientY; });
+window.addEventListener('touchend', e=>{
+  const touchEndY = e.changedTouches[0].clientY;
+  if(touchStartY - touchEndY > 50) switchSection(true); // 아래 스와이프
+  else if(touchEndY - touchStartY > 50) switchSection(false); // 위 스와이프
+});
+
+// 탭 애니메이션
 const { motion } = window['framer-motion'];
 
 function showTab(id, btn){
   const sections = document.querySelectorAll('#ui-section > section');
-  sections.forEach(sec => {
-    if(sec.id !== id) sec.classList.add('hidden');
+  sections.forEach(sec=>{
+    if(sec.id!==id) sec.classList.add('hidden');
   });
   const target = document.getElementById(id);
   if(target){
     target.classList.remove('hidden');
-    motion(target).animate({ opacity: [0,1], y: [20,0] }, { duration: 0.5 });
+    motion(target).animate({ opacity: [0,1], y: [20,0] }, { duration:0.5 });
   }
   document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
