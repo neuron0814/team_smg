@@ -94,9 +94,9 @@
 <body>
   <main>
     <!-- Video Section -->
-    <div class="video-container">
+    <div class="video-container" id="video-container">
       <video src="video.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-      <div class="scroll-arrow">>>> </div>
+      <div class="scroll-arrow" id="scroll-arrow">>>> </div>
     </div>
 
     <!-- UI Section -->
@@ -118,7 +118,7 @@
       </div>
     </section>
 
-    <!-- Sections (Original Content Kept) -->
+    <!-- 섹션: 강사 소개 -->
     <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="coach">
       <h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
       <div class="card inline-block mt-6">
@@ -130,6 +130,7 @@
       </div>
     </section>
 
+    <!-- 섹션: 수업 시간표 -->
     <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="schedule">
       <h2 class="text-4xl font-bold mb-8 text-center leading-snug border-b border-white/20 pb-2">수업 시간표</h2>
       <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-sm text-left">
@@ -144,7 +145,8 @@
       </div>
     </section>
 
-    <section class="hidden-section fade-in py-24 px-4 max-w-5xl mx-auto text-center" id="map">
+    <!-- 섹션: 오시는 길 -->
+    <section class="hidden-section fade-in py-24 px-4 max-w-5xl mx-auto" id="map">
       <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
       <div class="w-full h-96 mb-6">
         <iframe allowfullscreen="" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
@@ -154,8 +156,42 @@
         <button class="home-button" onclick="showSection('home')">홈으로</button>
       </div>
     </section>
-    <!-- 추가 섹션들... -->
 
+    <!-- 섹션: 무료 체험 -->
+    <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="trial">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
+      <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
+      <div class="text-center mt-6">
+        <button class="home-button" onclick="showSection('home')">홈으로</button>
+      </div>
+    </section>
+
+    <!-- 섹션: 등록비 -->
+    <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="price">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
+      <ul class="max-w-md mx-auto space-y-4 text-left text-sm">
+        <li class="card"><strong class="block text-white text-base mb-1">1개월</strong><p class="text-white/90">15만원</p></li>
+        <li class="card"><strong class="block text-white text-base mb-1">3개월</strong><p class="text-white/90">14만원 (월)</p></li>
+        <li class="card"><strong class="block text-white text-base mb-1">6개월</strong><p class="text-white/90">13만원 (월)</p></li>
+      </ul>
+      <div class="text-center mt-6">
+        <button class="home-button" onclick="showSection('home')">홈으로</button>
+      </div>
+    </section>
+
+    <!-- 섹션: 시설 안내 -->
+    <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="facility">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
+      <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
+        <div class="card"><h3 class="text-xl font-semibold mb-2">트레이닝 매트</h3><p class="text-sm text-white/80">청결하게 관리되는 넓은 매트 공간에서 안전하게 훈련할 수 있습니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">샤워 시설</h3><p class="text-sm text-white/80">운동 후 상쾌하게 마무리할 수 있도록 샤워실을 제공합니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">웨이트 장비</h3><p class="text-sm text-white/80">보강 훈련을 위한 기본적인 웨이트 기구를 갖추고 있습니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">휴게 공간</h3><p class="text-sm text-white/80">회원들이 편하게 쉴 수 있는 휴게 공간을 마련했습니다.</p></div>
+      </div>
+      <div class="text-center mt-6">
+        <button class="home-button" onclick="showSection('home')">홈으로</button>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -175,22 +211,6 @@
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
     }
-
-    document.addEventListener('scroll', function() {
-      const videoContainer = document.querySelector('.video-container');
-      const arrow = document.querySelector('.scroll-arrow');
-      const uiSection = document.getElementById('ui');
-      
-      if (window.scrollY > videoContainer.clientHeight) {
-        videoContainer.style.opacity = '0';
-        uiSection.classList.add('active');
-        arrow.style.opacity = '1';
-      } else {
-        videoContainer.style.opacity = '1';
-        uiSection.classList.remove('active');
-        arrow.style.opacity = '0';
-      }
-    });
   </script>
 </body>
 </html>
