@@ -10,9 +10,8 @@
 body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#1a1a1a; overflow-x:hidden; }
 .video-section { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
 .video-section video { width:100%; height:100%; object-fit:cover; }
-.ui-section { position:relative; z-index:10; background:#1a1a1a; padding:4rem 1rem 2rem; min-height:100vh; transition:all 0.7s ease; opacity:0; transform:translateY(50px);}
-.ui-section.visible { opacity:1; transform:translateY(0);}
-.section { display:none; opacity:0; transform:translateY(30px); transition:all 0.5s ease;}
+.ui-section { position:relative; z-index:10; background:#1a1a1a; min-height:100vh; transition:all 0.7s ease; opacity:0; transform:translateY(100vh); padding:4rem 1rem 2rem; }
+.section { display:none; opacity:0; transform:translateY(30px); transition:all 0.5s ease; }
 .section.active { display:block; opacity:1; transform:translateY(0);}
 .home-button { margin-top:2rem; display:inline-block; padding:0.5rem 1rem; border:1px solid white; font-size:0.875rem; transition:opacity 0.3s; }
 .home-button:hover{opacity:0.7;}
@@ -24,7 +23,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </head>
 <body class="text-white">
 
-<!-- 영상 풀스크린 -->
+<!-- 풀스크린 영상 -->
 <div class="video-section">
 <video autoplay muted playsinline loop>
 <source src="video.mp4" type="video/mp4">
@@ -33,7 +32,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 
 <!-- UI 섹션 -->
 <main class="ui-section" id="ui">
-<!-- 홈 탭 UI -->
+
 <section class="section active" id="home" style="display:block;">
 <h1 class="text-center font-extrabold mb-4 text-[clamp(2rem,5vw,3.5rem)] leading-tight break-words whitespace-normal">WELCOME TO TEAM SMG</h1>
 <p class="text-base md:text-lg mb-10 whitespace-normal">MMA & Jiu Jitsu in Suwon</p>
@@ -50,7 +49,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </div>
 </section>
 
-<!-- 모든 기존 섹션 그대로 유지 -->
+<!-- 강사 -->
 <section class="section" id="coach">
 <h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
 <div class="card inline-block mt-6">
@@ -62,6 +61,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </div>
 </section>
 
+<!-- 시간표 -->
 <section class="section" id="schedule">
 <h2 class="text-4xl font-bold mb-8 text-center leading-snug border-b border-white/20 pb-2">수업 시간표</h2>
 <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-sm text-left">
@@ -76,6 +76,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </div>
 </section>
 
+<!-- 등록비 -->
 <section class="section" id="price">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
 <ul class="max-w-md mx-auto space-y-4 text-left text-sm">
@@ -88,6 +89,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </div>
 </section>
 
+<!-- 시설 -->
 <section class="section" id="facility">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
 <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
@@ -101,6 +103,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </div>
 </section>
 
+<!-- 오시는 길 -->
 <section class="section" id="map">
 <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
 <div class="w-full h-96 mb-6">
@@ -112,6 +115,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </div>
 </section>
 
+<!-- 무료 체험 -->
 <section class="section" id="trial">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
 <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
@@ -123,21 +127,23 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </main>
 
 <script>
-// 스크롤 시 UI fade-in
 const uiSection = document.getElementById('ui');
 window.addEventListener('scroll', () => {
   const scrollPos = window.scrollY;
-  if(scrollPos>50){ uiSection.classList.add('visible'); }
+  if(scrollPos > 50){ // 스크롤 50px 이후 UI 등장
+    uiSection.style.opacity = '1';
+    uiSection.style.transform = 'translateY(0)';
+  }
 });
 
-// 섹션 전환
+// 탭 섹션 전환
 function showSection(id, btn){
   document.querySelectorAll('.section').forEach(sec=>{
     if(sec.id===id){
       sec.style.display='block';
-      setTimeout(()=>sec.classList.add('visible'),50);
+      setTimeout(()=>sec.classList.add('active'),50);
     } else {
-      sec.classList.remove('visible');
+      sec.classList.remove('active');
       setTimeout(()=>sec.style.display='none',300);
     }
   });
