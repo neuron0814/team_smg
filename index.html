@@ -7,17 +7,17 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.1/dist/framer-motion.umd.js"></script>
 <style>
-body { font-family: "Pretendard Variable", "SUIT", "Noto Sans KR", sans-serif; margin:0; background-color: #111; color: white; }
-.video-section { position: fixed; top:0; left:0; width:100%; height:100vh; z-index:0; overflow:hidden; }
+body { margin:0; font-family: "Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background-color:#111; color:white; }
+.video-section { position:fixed; top:0; left:0; width:100%; height:100vh; z-index:0; overflow:hidden; }
 .video-section video { width:100%; height:100%; object-fit:cover; }
-.ui-container { position: relative; z-index:10; opacity:0; transition: opacity 0.8s ease; }
+.ui-container { position:relative; z-index:10; }
 .hidden-section { display:none; opacity:0; transition: opacity 0.5s ease; }
 .active-section { display:block; opacity:1; }
-.card { background-color: #1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4); color:white; }
+.card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
 .tab-button { display:flex; align-items:center; justify-content:center; gap:0.5rem; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; width:9rem; transition: all 0.3s ease; color:white; background:transparent; }
 .tab-button:hover { opacity:0.8; }
 .tab-button.active { background-color:white; color:black; font-weight:600; }
-.home-button { margin-top: 2rem; display: inline-block; padding: 0.5rem 1rem; border: 1px solid white; font-size: 0.875rem; transition: opacity 0.3s ease; color:white; background:transparent; }
+.home-button { margin-top: 2rem; display:inline-block; padding:0.5rem 1rem; border:1px solid white; font-size:0.875rem; color:white; background:transparent; transition: opacity 0.3s; }
 .home-button:hover { opacity:0.7; }
 .arrow { position:absolute; bottom:20px; left:50%; transform:translateX(-50%) rotate(90deg); font-size:3rem; color:white; cursor:pointer; opacity:0; transition: opacity 0.5s; }
 </style>
@@ -34,7 +34,8 @@ body { font-family: "Pretendard Variable", "SUIT", "Noto Sans KR", sans-serif; m
 
 <!-- UI 섹션 -->
 <div class="ui-container" id="ui-container">
-  <main id="framer-ui" class="min-h-screen">
+  <main class="min-h-screen">
+
     <!-- 홈 -->
     <section class="active-section py-24 md:py-36 text-center max-w-5xl mx-auto" id="home">
       <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-extrabold mb-4">WELCOME TO TEAM SMG</h1>
@@ -112,6 +113,7 @@ body { font-family: "Pretendard Variable", "SUIT", "Noto Sans KR", sans-serif; m
       <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
       <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
     </section>
+
   </main>
 </div>
 
@@ -120,40 +122,34 @@ body { font-family: "Pretendard Variable", "SUIT", "Noto Sans KR", sans-serif; m
 const scrollArrow = document.getElementById('scroll-arrow');
 setTimeout(()=>{scrollArrow.style.opacity=1;},1000);
 
-// 영상 ↔ UI 전환
+// 영상 opacity 조절
 const videoSection = document.getElementById('video-section');
-const uiContainer = document.getElementById('ui-container');
 window.addEventListener('scroll',()=>{
-  if(window.scrollY>50){
-    uiContainer.style.opacity=1;
-    videoSection.style.opacity=0;
-    videoSection.style.pointerEvents='none';
-  } else {
-    uiContainer.style.opacity=0;
-    videoSection.style.opacity=1;
-    videoSection.style.pointerEvents='auto';
-  }
+  const ratio = Math.min(window.scrollY / window.innerHeight, 1);
+  videoSection.style.opacity = 1 - ratio;
 });
 
 // 섹션 전환
 const { motion } = window['framer-motion'];
 function showSection(id, btn){
-  const sections=['home','coach','schedule','price','facility','map','trial'];
-  sections.forEach(sec=>{
-    const el=document.getElementById(sec);
-    if(el){ 
-      el.classList.remove('active-section'); 
-      el.classList.add('hidden-section'); 
-      motion(el).animate({opacity:0,y:20},{duration:0.3});
+  const sections = ['home','coach','schedule','price','facility','map','trial'];
+  sections.forEach(sec => {
+    const el = document.getElementById(sec);
+    if(el){
+      el.classList.remove('active-section');
+      el.classList.add('hidden-section');
+      motion(el).animate({opacity:0, y:20}, {duration:0.3});
     }
   });
-  const target=document.getElementById(id);
-  if(target){ 
-    target.classList.remove('hidden-section'); 
-    target.classList.add('active-section'); 
-    motion(target).animate({opacity:1,y:0},{duration:0.5});
+  
+  const target = document.getElementById(id);
+  if(target){
+    target.classList.remove('hidden-section');
+    target.classList.add('active-section');
+    motion(target).animate({opacity:1, y:0}, {duration:0.5});
   }
-  document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
+  
+  document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
   if(btn) btn.classList.add('active');
 }
 </script>
