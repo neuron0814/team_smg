@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>TEAM SMG</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.1/dist/framer-motion.umd.js"></script>
 <link rel="icon" href="favicon.png" type="image/png" />
 <style>
 body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#1a1a1a; overflow-x:hidden; }
 .video-section { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
 .video-section video { width:100%; height:100%; object-fit:cover; }
-.ui-section { position:relative; z-index:10; background:#1a1a1a; min-height:100vh; transition:all 0.7s ease; opacity:0; transform:translateY(100vh); padding:4rem 1rem 2rem; }
+.ui-section { position:relative; z-index:10; min-height:100vh; padding:4rem 1rem 2rem; opacity:0; transform:translateY(100vh); transition:all 0.7s ease; }
 .section { display:none; opacity:0; transform:translateY(30px); transition:all 0.5s ease; }
 .section.active { display:block; opacity:1; transform:translateY(0);}
 .home-button { margin-top:2rem; display:inline-block; padding:0.5rem 1rem; border:1px solid white; font-size:0.875rem; transition:opacity 0.3s; }
@@ -19,20 +20,24 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 .tab-button { display:flex; align-items:center; justify-content:center; gap:0.5rem; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; width:9rem; transition:all 0.3s;}
 .tab-button:hover{opacity:0.8;}
 .tab-button.active{background:white;color:black;font-weight:600;}
+.scroll-arrow { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); font-size:2rem; color:white; animation:arrowUpDown 1.2s ease-in-out infinite; }
+@keyframes arrowUpDown { 0%,100% { transform:translate(-50%,0); } 50% { transform:translate(-50%,10px); } }
 </style>
 </head>
 <body class="text-white">
 
-<!-- 풀스크린 영상 -->
+<!-- 영상 풀스크린 -->
 <div class="video-section">
-<video autoplay muted playsinline loop>
-<source src="video.mp4" type="video/mp4">
-</video>
+  <video autoplay muted playsinline loop>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+  <div class="scroll-arrow">⬇️</div>
 </div>
 
 <!-- UI 섹션 -->
 <main class="ui-section" id="ui">
 
+<!-- 홈 -->
 <section class="section active" id="home" style="display:block;">
 <h1 class="text-center font-extrabold mb-4 text-[clamp(2rem,5vw,3.5rem)] leading-tight break-words whitespace-normal">WELCOME TO TEAM SMG</h1>
 <p class="text-base md:text-lg mb-10 whitespace-normal">MMA & Jiu Jitsu in Suwon</p>
@@ -56,9 +61,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 <p class="text-base font-semibold mb-1">관장 박수오</p>
 <p class="text-sm text-white/90">주짓수 브라운벨트 / 종합격투기 지도사 자격증</p>
 </div>
-<div class="text-center">
-<button class="home-button" onclick="showSection('home')">홈으로</button>
-</div>
+<div class="text-center"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
 </section>
 
 <!-- 시간표 -->
@@ -71,9 +74,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 <li class="card"><strong class="block text-white text-base mb-1">목요일</strong><p class="text-white/90">MMA - 오후 9:30</p></li>
 <li class="card sm:col-span-2"><strong class="block text-white text-base mb-1">금요일</strong><p class="text-white/90">스파링 데이 - 오전 10:30, 오후 9:30</p></li>
 </ul>
-<div class="text-center">
-<button class="home-button" onclick="showSection('home')">홈으로</button>
-</div>
+<div class="text-center"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
 </section>
 
 <!-- 등록비 -->
@@ -84,9 +85,7 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 <li class="card"><strong class="block text-white text-base mb-1">3개월</strong><p class="text-white/90">14만원 (월)</p></li>
 <li class="card"><strong class="block text-white text-base mb-1">6개월</strong><p class="text-white/90">13만원 (월)</p></li>
 </ul>
-<div class="text-center mt-6">
-<button class="home-button" onclick="showSection('home')">홈으로</button>
-</div>
+<div class="text-center"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
 </section>
 
 <!-- 시설 -->
@@ -98,30 +97,24 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 <div class="card"><h3 class="text-xl font-semibold mb-2">웨이트 장비</h3><p class="text-sm text-white/80">보강 훈련을 위한 기본적인 웨이트 기구를 갖추고 있습니다.</p></div>
 <div class="card"><h3 class="text-xl font-semibold mb-2">휴게 공간</h3><p class="text-sm text-white/80">회원들이 편하게 쉴 수 있는 휴게 공간을 마련했습니다.</p></div>
 </div>
-<div class="text-center mt-6">
-<button class="home-button" onclick="showSection('home')">홈으로</button>
-</div>
+<div class="text-center"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
 </section>
 
-<!-- 오시는 길 -->
+<!-- 지도 -->
 <section class="section" id="map">
 <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
 <div class="w-full h-96 mb-6">
 <iframe allowfullscreen height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
 </div>
 <p class="text-center text-sm text-white/90 mb-6">경기 수원시 장안구 만석로19번길 11-7 306호 수원멀티짐</p>
-<div class="text-center">
-<button class="home-button" onclick="showSection('home')">홈으로</button>
-</div>
+<div class="text-center"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
 </section>
 
 <!-- 무료 체험 -->
 <section class="section" id="trial">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
 <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
-<div class="text-center mt-6">
-<button class="home-button" onclick="showSection('home')">홈으로</button>
-</div>
+<div class="text-center"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
 </section>
 
 </main>
@@ -129,16 +122,15 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 <script>
 const uiSection = document.getElementById('ui');
 window.addEventListener('scroll', () => {
-  const scrollPos = window.scrollY;
-  if(scrollPos > 50){ // 스크롤 50px 이후 UI 등장
+  if(window.scrollY > 50){
     uiSection.style.opacity = '1';
     uiSection.style.transform = 'translateY(0)';
   }
 });
 
-// 탭 섹션 전환
 function showSection(id, btn){
-  document.querySelectorAll('.section').forEach(sec=>{
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(sec=>{
     if(sec.id===id){
       sec.style.display='block';
       setTimeout(()=>sec.classList.add('active'),50);
