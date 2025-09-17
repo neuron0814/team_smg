@@ -27,10 +27,23 @@ body, html { margin:0; padding:0; overflow-x:hidden; font-family:"Pretendard Var
 .tab-button.active { background:white; color:black; font-weight:600; }
 .home-button { margin-top:1rem; padding:0.5rem 1rem; border:1px solid white; background:transparent; color:white; cursor:pointer; transition:opacity 0.3s; }
 .home-button:hover { opacity:0.7; }
-.arrow { position:absolute; bottom:calc(env(safe-area-inset-bottom,20px)); left:50%; transform:translateX(-50%) rotate(90deg); font-size:3rem; color:white; cursor:pointer; opacity:0; transition:opacity 0.5s; z-index:10; }
-section { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
-.hidden { opacity:0; pointer-events:none; }
-.active { opacity:1; pointer-events:auto; }
+
+/* 화살표 위치 조정 */
+.arrow { 
+  position: absolute; 
+  bottom: 60px; /* 모바일에서도 적당히 올라오게 수정 */
+  left: 50%; 
+  transform: translateX(-50%) rotate(90deg); 
+  font-size: 3rem; 
+  color: white; 
+  cursor: pointer; 
+  opacity: 0; 
+  transition: opacity 0.5s; 
+  z-index: 10; 
+}
+
+section { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; position:absolute; top:0; left:0; opacity:0; pointer-events:none; }
+section.active { opacity:1; pointer-events:auto; }
 </style>
 </head>
 <body>
@@ -63,7 +76,7 @@ section { width:100%; display:flex; flex-direction:column; align-items:center; j
     </section>
 
     <!-- Tabs -->
-    <section class="hidden" id="coach">
+    <section id="coach">
       <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
       <div class="card">
         <p class="font-semibold mb-1">관장 박수오</p>
@@ -72,7 +85,7 @@ section { width:100%; display:flex; flex-direction:column; align-items:center; j
       <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <section class="hidden" id="schedule">
+    <section id="schedule">
       <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">시간표</h2>
       <ul class="text-left text-sm">
         <li class="card">월요일: 주짓수 - 오전 10:30, 오후 9:30</li>
@@ -84,7 +97,7 @@ section { width:100%; display:flex; flex-direction:column; align-items:center; j
       <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <section class="hidden" id="price">
+    <section id="price">
       <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">등록비</h2>
       <ul class="text-left text-sm">
         <li class="card">1개월: 15만원</li>
@@ -94,7 +107,7 @@ section { width:100%; display:flex; flex-direction:column; align-items:center; j
       <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <section class="hidden" id="facility">
+    <section id="facility">
       <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">시설</h2>
       <div class="card">트레이닝 매트</div>
       <div class="card">샤워 시설</div>
@@ -103,13 +116,13 @@ section { width:100%; display:flex; flex-direction:column; align-items:center; j
       <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <section class="hidden" id="map">
+    <section id="map">
       <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">오시는 길</h2>
       <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
       <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <section class="hidden" id="trial">
+    <section id="trial">
       <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">무료 체험</h2>
       <p class="mb-4">종목당 1회 무료 체험 가능합니다. 수업 10분 전까지 오시면 됩니다.</p>
       <button class="home-button" onclick="showTab('home')">홈으로</button>
@@ -127,7 +140,7 @@ const uiSection = document.getElementById('ui-section');
 
 let switched = false;
 
-// 섹션 전환 (모바일 스와이프 포함)
+// 섹션 전환
 function switchSection(toUI){
   if(toUI && !switched){
     switched = true;
@@ -147,13 +160,13 @@ window.addEventListener('wheel', (e)=>{
 
 scrollArrow.addEventListener('click', ()=>{ switchSection(true); });
 
-// 모바일 스와이프 처리
+// 모바일 스와이프
 let touchStartY = 0;
 window.addEventListener('touchstart', e=>{ touchStartY = e.touches[0].clientY; });
 window.addEventListener('touchend', e=>{
   const touchEndY = e.changedTouches[0].clientY;
-  if(touchStartY - touchEndY > 50) switchSection(true); // 아래 스와이프
-  else if(touchEndY - touchStartY > 50) switchSection(false); // 위 스와이프
+  if(touchStartY - touchEndY > 50) switchSection(true);
+  else if(touchEndY - touchStartY > 50) switchSection(false);
 });
 
 // 탭 애니메이션
@@ -162,12 +175,12 @@ const { motion } = window['framer-motion'];
 function showTab(id, btn){
   const sections = document.querySelectorAll('#ui-section > section');
   sections.forEach(sec=>{
-    if(sec.id!==id) sec.classList.add('hidden');
+    sec.classList.remove('active');
   });
   const target = document.getElementById(id);
   if(target){
-    target.classList.remove('hidden');
-    motion(target).animate({ opacity: [0,1], y: [20,0] }, { duration:0.5 });
+    target.classList.add('active');
+    motion(target).animate({ opacity:[0,1], y:[20,0] }, { duration:0.5 });
   }
   document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
