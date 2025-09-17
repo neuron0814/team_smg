@@ -7,175 +7,141 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.1/dist/framer-motion.umd.js"></script>
 <style>
-body { margin:0; font-family: "Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background-color:#111; color:white; overflow-x:hidden; }
-.video-section { position:fixed; top:0; left:0; width:100%; height:100vh; z-index:0; overflow:hidden; }
+body, html { margin:0; padding:0; overflow-x:hidden; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#111; color:white; }
+.section-wrapper { position:relative; width:100%; height:100vh; overflow:hidden; }
+.video-section, .ui-section { position:absolute; top:0; left:0; width:100%; height:100vh; display:flex; justify-content:center; align-items:center; transition: transform 0.8s ease, opacity 0.8s ease; }
 .video-section video { width:100%; height:100%; object-fit:cover; }
-.ui-container { position:relative; z-index:10; opacity:0; transform:translateY(100vh); transition: opacity 0.8s ease, transform 0.8s ease; min-height:100vh; overflow:hidden; }
-.hidden-section { opacity:0; pointer-events:none; transition: opacity 0.5s ease; }
-.active-section { opacity:1; pointer-events:auto; transition: opacity 0.5s ease; }
-.card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
-.tab-button { display:flex; align-items:center; justify-content:center; gap:0.5rem; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; width:9rem; transition: all 0.3s ease; color:white; background:transparent; }
-.tab-button:hover { opacity:0.8; }
-.tab-button.active { background-color:white; color:black; font-weight:600; }
-.home-button { margin-top: 2rem; display:inline-block; padding:0.5rem 1rem; border:1px solid white; font-size:0.875rem; color:white; background:transparent; transition: opacity 0.3s; }
+.ui-section { flex-direction:column; padding:2rem; overflow:hidden; background:#111; }
+.hidden { opacity:0; pointer-events:none; }
+.active { opacity:1; pointer-events:auto; }
+.card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4); margin-bottom:1rem; }
+.tab-button { display:flex; justify-content:center; align-items:center; gap:0.5rem; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; color:white; background:transparent; cursor:pointer; transition:all 0.3s; }
+.tab-button.active { background:white; color:black; font-weight:600; }
+.home-button { margin-top:1rem; padding:0.5rem 1rem; border:1px solid white; background:transparent; color:white; cursor:pointer; transition:opacity 0.3s; }
 .home-button:hover { opacity:0.7; }
-.arrow {
-  position: absolute;
-  bottom: env(safe-area-inset-bottom, 20px);
-  left: 50%;
-  transform: translateX(-50%) rotate(90deg);
-  font-size: 3rem;
-  color: white;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.5s;
-  z-index: 20;
-}
-section { padding:4rem 1rem; box-sizing:border-box; min-height:100vh; display:flex; flex-direction:column; justify-content:center; }
+.arrow { position:absolute; bottom:env(safe-area-inset-bottom,20px); left:50%; transform:translateX(-50%) rotate(90deg); font-size:3rem; color:white; cursor:pointer; opacity:0; transition:opacity 0.5s; z-index:10; }
+section { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
 </style>
 </head>
 <body>
 
-<section class="video-section" id="video-section">
-  <video autoplay muted loop playsinline>
-    <source src="video.mp4" type="video/mp4">
-  </video>
-  <div class="arrow" id="scroll-arrow">&gt;&gt;&gt;</div>
-</section>
+<div class="section-wrapper">
 
-<div class="ui-container" id="ui-container">
-  <main class="min-h-screen">
+  <!-- Video Section -->
+  <div class="video-section active" id="video-section">
+    <video autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+    <div class="arrow" id="scroll-arrow">&gt;&gt;&gt;</div>
+  </div>
+
+  <!-- UI Section -->
+  <div class="ui-section hidden" id="ui-section">
 
     <!-- Home -->
-    <section class="active-section text-center max-w-5xl mx-auto" id="home">
+    <section id="home">
       <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-extrabold mb-4">WELCOME TO TEAM SMG</h1>
-      <p class="text-base md:text-lg mb-10">MMA & Jiu Jitsu in Suwon</p>
+      <p class="mb-6">MMA & Jiu Jitsu in Suwon</p>
       <div class="flex flex-wrap justify-center gap-3">
-        <button class="tab-button" onclick="showSection('coach', this)">👤 강사 소개</button>
-        <button class="tab-button" onclick="showSection('schedule', this)">🗓️ 시간표</button>
-        <button class="tab-button" onclick="showSection('price', this)">💳 등록비</button>
-        <button class="tab-button" onclick="showSection('facility', this)">🏋️ 시설</button>
-        <button class="tab-button" onclick="showSection('map', this)">📍 오시는 길</button>
-        <button class="tab-button" onclick="showSection('trial', this)">🎟️ 무료 체험</button>
+        <button class="tab-button" onclick="showTab('coach', this)">👤 강사 소개</button>
+        <button class="tab-button" onclick="showTab('schedule', this)">🗓️ 시간표</button>
+        <button class="tab-button" onclick="showTab('price', this)">💳 등록비</button>
+        <button class="tab-button" onclick="showTab('facility', this)">🏋️ 시설</button>
+        <button class="tab-button" onclick="showTab('map', this)">📍 오시는 길</button>
+        <button class="tab-button" onclick="showTab('trial', this)">🎟️ 무료 체험</button>
       </div>
-      <div class="mt-6"><a href="https://www.instagram.com/smgacademy_/" target="_blank" class="text-sm hover:underline">인스타그램 @smgacademy_</a></div>
     </section>
 
-    <!-- Coach -->
-    <section class="hidden-section text-center max-w-4xl mx-auto" id="coach">
-      <h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
-      <div class="card mt-6 inline-block">
+    <!-- Tabs -->
+    <section class="hidden" id="coach">
+      <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
+      <div class="card">
         <p class="font-semibold mb-1">관장 박수오</p>
         <p class="text-white/90">주짓수 브라운벨트 / 종합격투기 지도사 자격증</p>
       </div>
-      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+      <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <!-- Schedule -->
-    <section class="hidden-section text-center max-w-4xl mx-auto" id="schedule">
-      <h2 class="text-4xl font-bold mb-8 border-b border-white/20 pb-2">수업 시간표</h2>
-      <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-left text-sm">
-        <li class="card"><strong class="block text-base mb-1">월요일</strong><p class="text-white/90">주짓수 - 오전 10:30, 오후 9:30</p></li>
-        <li class="card"><strong class="block text-base mb-1">화요일</strong><p class="text-white/90">MMA - 오후 9:30</p></li>
-        <li class="card"><strong class="block text-base mb-1">수요일</strong><p class="text-white/90">주짓수 - 오전 10:30, 오후 9:30</p></li>
-        <li class="card"><strong class="block text-base mb-1">목요일</strong><p class="text-white/90">MMA - 오후 9:30</p></li>
-        <li class="card sm:col-span-2"><strong class="block text-base mb-1">금요일</strong><p class="text-white/90">스파링 데이 - 오전 10:30, 오후 9:30</p></li>
+    <section class="hidden" id="schedule">
+      <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">시간표</h2>
+      <ul class="text-left text-sm">
+        <li class="card">월요일: 주짓수 - 오전 10:30, 오후 9:30</li>
+        <li class="card">화요일: MMA - 오후 9:30</li>
+        <li class="card">수요일: 주짓수 - 오전 10:30, 오후 9:30</li>
+        <li class="card">목요일: MMA - 오후 9:30</li>
+        <li class="card">금요일: 스파링 - 오전 10:30, 오후 9:30</li>
       </ul>
-      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+      <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <!-- Price -->
-    <section class="hidden-section text-center max-w-4xl mx-auto" id="price">
-      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
-      <ul class="max-w-md mx-auto space-y-4 text-left text-sm">
-        <li class="card"><strong class="block mb-1">1개월</strong><p class="text-white/90">15만원</p></li>
-        <li class="card"><strong class="block mb-1">3개월</strong><p class="text-white/90">14만원 (월)</p></li>
-        <li class="card"><strong class="block mb-1">6개월</strong><p class="text-white/90">13만원 (월)</p></li>
+    <section class="hidden" id="price">
+      <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">등록비</h2>
+      <ul class="text-left text-sm">
+        <li class="card">1개월: 15만원</li>
+        <li class="card">3개월: 14만원 (월)</li>
+        <li class="card">6개월: 13만원 (월)</li>
       </ul>
-      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+      <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <!-- Facility -->
-    <section class="hidden-section text-center max-w-4xl mx-auto" id="facility">
-      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
-      <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
-        <div class="card"><h3 class="text-xl font-semibold mb-2">트레이닝 매트</h3><p class="text-sm text-white/80">청결하게 관리되는 넓은 매트 공간에서 안전하게 훈련할 수 있습니다.</p></div>
-        <div class="card"><h3 class="text-xl font-semibold mb-2">샤워 시설</h3><p class="text-sm text-white/80">운동 후 상쾌하게 마무리할 수 있도록 샤워실을 제공합니다.</p></div>
-        <div class="card"><h3 class="text-xl font-semibold mb-2">웨이트 장비</h3><p class="text-sm text-white/80">보강 훈련을 위한 기본적인 웨이트 기구를 갖추고 있습니다.</p></div>
-        <div class="card"><h3 class="text-xl font-semibold mb-2">휴게 공간</h3><p class="text-sm text-white/80">회원들이 편하게 쉴 수 있는 휴게 공간을 마련했습니다.</p></div>
-      </div>
-      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+    <section class="hidden" id="facility">
+      <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">시설</h2>
+      <div class="card">트레이닝 매트</div>
+      <div class="card">샤워 시설</div>
+      <div class="card">웨이트 장비</div>
+      <div class="card">휴게 공간</div>
+      <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <!-- Map -->
-    <section class="hidden-section max-w-5xl mx-auto" id="map">
-      <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
-      <div class="w-full h-96 mb-6">
-        <iframe allowfullscreen title="지도" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
-      </div>
-      <p class="text-center text-sm text-white/90 mb-6">경기 수원시 장안구 만석로19번길 11-7 306호 수원멀티짐</p>
-      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+    <section class="hidden" id="map">
+      <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">오시는 길</h2>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
+      <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-    <!-- Trial -->
-    <section class="hidden-section text-center max-w-4xl mx-auto" id="trial">
-      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
-      <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
-      <div class="mt-6"><button class="home-button" onclick="showSection('home')">홈으로</button></div>
+    <section class="hidden" id="trial">
+      <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">무료 체험</h2>
+      <p class="mb-4">종목당 1회 무료 체험 가능합니다. 수업 10분 전까지 오시면 됩니다.</p>
+      <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
-  </main>
+  </div>
 </div>
 
 <script>
 const scrollArrow = document.getElementById('scroll-arrow');
 setTimeout(()=>{scrollArrow.style.opacity=1;},1000);
 
-let hasSwitched = false;
 const videoSection = document.getElementById('video-section');
-const uiContainer = document.getElementById('ui-container');
+const uiSection = document.getElementById('ui-section');
 
-window.addEventListener('scroll', () => {
-  const threshold = window.innerHeight * 0.2;
-  if (!hasSwitched && window.scrollY > threshold) {
-    hasSwitched = true;
-    videoSection.style.transition='opacity 0.8s ease';
-    videoSection.style.opacity = 0;
-    videoSection.style.pointerEvents = 'none';
-    uiContainer.style.transition='opacity 0.8s ease, transform 0.8s ease';
-    uiContainer.style.opacity = 1;
-    uiContainer.style.transform = 'translateY(0)';
-  } else if (hasSwitched && window.scrollY < threshold) {
-    hasSwitched = false;
-    videoSection.style.opacity = 1;
-    videoSection.style.pointerEvents = 'auto';
-    uiContainer.style.opacity = 0;
-    uiContainer.style.transform = 'translateY(100vh)';
+let switched = false;
+
+window.addEventListener('wheel', (e)=>{
+  if(e.deltaY > 0 && !switched){
+    switched = true;
+    videoSection.classList.remove('active'); videoSection.classList.add('hidden');
+    uiSection.classList.remove('hidden'); uiSection.classList.add('active');
+  } else if(e.deltaY < 0 && switched){
+    switched = false;
+    uiSection.classList.remove('active'); uiSection.classList.add('hidden');
+    videoSection.classList.remove('hidden'); videoSection.classList.add('active');
   }
 });
 
-scrollArrow.addEventListener('click', () => {
-  window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+scrollArrow.addEventListener('click', ()=>{ 
+  switched = true;
+  videoSection.classList.remove('active'); videoSection.classList.add('hidden');
+  uiSection.classList.remove('hidden'); uiSection.classList.add('active');
 });
 
-const { motion } = window['framer-motion'];
-function showSection(id, btn){
-  const sections = ['home','coach','schedule','price','facility','map','trial'];
-  sections.forEach(sec => {
-    const el = document.getElementById(sec);
-    if(el){
-      el.classList.remove('active-section');
-      el.classList.add('hidden-section');
-      motion(el).animate({opacity:0, y:20},{duration:0.3});
-    }
+function showTab(id, btn){
+  document.querySelectorAll('#ui-section > section').forEach(sec=>{
+    sec.classList.add('hidden'); sec.classList.remove('active');
   });
   const target = document.getElementById(id);
-  if(target){
-    target.classList.remove('hidden-section');
-    target.classList.add('active-section');
-    motion(target).animate({opacity:1, y:0},{duration:0.5});
-  }
-  document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+  if(target){ target.classList.remove('hidden'); target.classList.add('active'); }
+  document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
 }
 </script>
