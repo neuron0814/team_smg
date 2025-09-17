@@ -6,16 +6,12 @@
 <title>TEAM SMG</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="icon" href="favicon.png" type="image/png" />
-<link href="https://fonts.googleapis.com/css2?family=SUIT:wght@300;400;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet"/>
 <style>
 body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#1a1a1a; overflow-x:hidden; }
 .video-bg { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
-main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화면 확보 */
-.fade-in { opacity:0; transform:translateY(30px); transition:all 0.7s ease-out; }
-.fade-in.visible { opacity:1; transform:translateY(0); }
-.section { display:none; opacity:0; transform:translateY(30px); transition:all 0.5s ease-out; }
-.section.active { display:block; opacity:1; transform:translateY(0); }
+main { position:relative; z-index:10; padding-top:100vh; }
+.section { opacity:0; transform:translateY(30px); transition:all 0.7s ease; display:none; }
+.section.visible { opacity:1; transform:translateY(0); display:block; }
 .home-button { margin-top:2rem; display:inline-block; padding:0.5rem 1rem; border:1px solid white; font-size:0.875rem; transition:opacity 0.3s; }
 .home-button:hover{opacity:0.7;}
 .card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4);}
@@ -32,8 +28,9 @@ main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화�
 </video>
 
 <main>
+
 <!-- 홈 섹션 -->
-<section class="fade-in section active visible" id="home">
+<section class="section visible" id="home" style="display:block;">
 <h1 class="text-center font-extrabold mb-4 text-[clamp(2rem,5vw,3.5rem)] leading-tight break-words whitespace-normal">WELCOME TO TEAM SMG</h1>
 <p class="text-base md:text-lg mb-10 whitespace-normal">MMA & Jiu Jitsu in Suwon</p>
 <div class="flex flex-wrap justify-center items-center gap-3">
@@ -45,14 +42,12 @@ main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화�
 <button class="tab-button" onclick="showSection('trial', this)">🎟️ 무료 체험</button>
 </div>
 <div class="text-center mt-6">
-<a href="https://www.instagram.com/smgacademy_/" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-white hover:underline">
-인스타그램 @smgacademy_
-</a>
+<a href="https://www.instagram.com/smgacademy_/" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-white hover:underline">인스타그램 @smgacademy_</a>
 </div>
 </section>
 
 <!-- 강사 섹션 -->
-<section class="fade-in section" id="coach">
+<section class="section" id="coach">
 <h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
 <div class="card inline-block mt-6">
 <p class="text-base font-semibold mb-1">관장 박수오</p>
@@ -64,7 +59,7 @@ main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화�
 </section>
 
 <!-- 시간표 섹션 -->
-<section class="fade-in section" id="schedule">
+<section class="section" id="schedule">
 <h2 class="text-4xl font-bold mb-8 text-center leading-snug border-b border-white/20 pb-2">수업 시간표</h2>
 <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-sm text-left">
 <li class="card"><strong class="block text-white text-base mb-1">월요일</strong><p class="text-white/90">주짓수 - 오전 10:30, 오후 9:30</p></li>
@@ -79,7 +74,7 @@ main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화�
 </section>
 
 <!-- 등록비 섹션 -->
-<section class="fade-in section" id="price">
+<section class="section" id="price">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
 <ul class="max-w-md mx-auto space-y-4 text-left text-sm">
 <li class="card"><strong class="block text-white text-base mb-1">1개월</strong><p class="text-white/90">15만원</p></li>
@@ -92,9 +87,13 @@ main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화�
 </section>
 
 <!-- 시설 섹션 -->
-<section class="fade-in section" id="facility">
+<section class="section" id="facility">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
 <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
+<div class="card"><h3 class="text-xl font-semibold mb-2">트레이닝 매트</h3><p class="text-sm text-white/80">청결하게 관리되는 넓은 매트 공간에서 안전하게 훈련할 수 있습니다.</p></div>
+<div class="card"><h3 class="text-xl font-semibold mb-2">샤워 시설</h3><p class="text-sm text-white/80">운동 후 상쾌하게 마무리할 수 있도록 샤워실을 제공합니다.</p></div>
+<div class="card"><h3 class="text-xl font-semibold mb-2">웨이트 장비</h3><p class="text-sm text-white/80">보강 훈련을 위한 기본적인 웨이트 기구를 갖추고 있습니다.</p></div>
+<div class="card"><h3 class="text-xl font-semibold mb-2">휴게 공간</h3><p class="text-sm text-white/80">회원들이 편하게 쉴 수 있는 휴게 공간을 마련했습니다.</p></div>
 </div>
 <div class="text-center mt-6">
 <button class="home-button" onclick="showSection('home')">홈으로</button>
@@ -102,7 +101,7 @@ main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화�
 </section>
 
 <!-- 오시는 길 섹션 -->
-<section class="fade-in section" id="map">
+<section class="section" id="map">
 <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
 <div class="w-full h-96 mb-6">
 <iframe allowfullscreen height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
@@ -114,7 +113,7 @@ main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화�
 </section>
 
 <!-- 무료 체험 섹션 -->
-<section class="fade-in section" id="trial">
+<section class="section" id="trial">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
 <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
 <div class="text-center mt-6">
@@ -125,27 +124,23 @@ main { position:relative; z-index:10; padding-top:100vh; } /* 영상 전체 화�
 </main>
 
 <script>
-const sections = document.querySelectorAll('.section');
-
-function checkFadeIn() {
-  const triggerBottom = window.innerHeight * 0.85;
-  sections.forEach(sec => {
-    if(sec.getBoundingClientRect().top < triggerBottom){
-      sec.classList.add('visible');
-    }
+// Intersection Observer로 스크롤 시 fade-in
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){ entry.target.classList.add('visible'); }
   });
-}
-window.addEventListener('scroll', checkFadeIn);
-window.addEventListener('load', checkFadeIn);
+},{threshold:0.1});
+document.querySelectorAll('.section').forEach(sec=>observer.observe(sec));
 
+// 섹션 전환
 function showSection(id, btn){
-  sections.forEach(sec=>{
+  document.querySelectorAll('.section').forEach(sec=>{
     if(sec.id===id){
-      sec.classList.add('active');
+      sec.style.display='block';
       setTimeout(()=>sec.classList.add('visible'),50);
     } else {
       sec.classList.remove('visible');
-      setTimeout(()=>sec.classList.remove('active'),300);
+      setTimeout(()=>sec.style.display='none',300);
     }
   });
   document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
