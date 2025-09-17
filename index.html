@@ -8,10 +8,12 @@
 <link rel="icon" href="favicon.png" type="image/png" />
 <style>
 body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#1a1a1a; overflow-x:hidden; }
-.video-bg { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
-main { position:relative; z-index:10; padding-top:100vh; }
-.section { opacity:0; transform:translateY(30px); transition:all 0.7s ease; display:none; }
-.section.visible { opacity:1; transform:translateY(0); display:block; }
+.video-section { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
+.video-section video { width:100%; height:100%; object-fit:cover; }
+.ui-section { position:relative; z-index:10; background:#1a1a1a; padding:4rem 1rem 2rem; min-height:100vh; transition:all 0.7s ease; opacity:0; transform:translateY(50px);}
+.ui-section.visible { opacity:1; transform:translateY(0);}
+.section { display:none; opacity:0; transform:translateY(30px); transition:all 0.5s ease;}
+.section.active { display:block; opacity:1; transform:translateY(0);}
 .home-button { margin-top:2rem; display:inline-block; padding:0.5rem 1rem; border:1px solid white; font-size:0.875rem; transition:opacity 0.3s; }
 .home-button:hover{opacity:0.7;}
 .card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4);}
@@ -20,17 +22,19 @@ main { position:relative; z-index:10; padding-top:100vh; }
 .tab-button.active{background:white;color:black;font-weight:600;}
 </style>
 </head>
-<body class="text-white min-h-screen px-4">
+<body class="text-white">
 
-<!-- 배경 영상 -->
-<video class="video-bg" autoplay muted playsinline loop>
+<!-- 영상 풀스크린 -->
+<div class="video-section">
+<video autoplay muted playsinline loop>
 <source src="video.mp4" type="video/mp4">
 </video>
+</div>
 
-<main>
-
-<!-- 홈 섹션 -->
-<section class="section visible" id="home" style="display:block;">
+<!-- UI 섹션 -->
+<main class="ui-section" id="ui">
+<!-- 홈 탭 UI -->
+<section class="section active" id="home" style="display:block;">
 <h1 class="text-center font-extrabold mb-4 text-[clamp(2rem,5vw,3.5rem)] leading-tight break-words whitespace-normal">WELCOME TO TEAM SMG</h1>
 <p class="text-base md:text-lg mb-10 whitespace-normal">MMA & Jiu Jitsu in Suwon</p>
 <div class="flex flex-wrap justify-center items-center gap-3">
@@ -46,7 +50,7 @@ main { position:relative; z-index:10; padding-top:100vh; }
 </div>
 </section>
 
-<!-- 강사 섹션 -->
+<!-- 모든 기존 섹션 그대로 유지 -->
 <section class="section" id="coach">
 <h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
 <div class="card inline-block mt-6">
@@ -58,7 +62,6 @@ main { position:relative; z-index:10; padding-top:100vh; }
 </div>
 </section>
 
-<!-- 시간표 섹션 -->
 <section class="section" id="schedule">
 <h2 class="text-4xl font-bold mb-8 text-center leading-snug border-b border-white/20 pb-2">수업 시간표</h2>
 <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-sm text-left">
@@ -73,7 +76,6 @@ main { position:relative; z-index:10; padding-top:100vh; }
 </div>
 </section>
 
-<!-- 등록비 섹션 -->
 <section class="section" id="price">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
 <ul class="max-w-md mx-auto space-y-4 text-left text-sm">
@@ -86,7 +88,6 @@ main { position:relative; z-index:10; padding-top:100vh; }
 </div>
 </section>
 
-<!-- 시설 섹션 -->
 <section class="section" id="facility">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
 <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
@@ -100,7 +101,6 @@ main { position:relative; z-index:10; padding-top:100vh; }
 </div>
 </section>
 
-<!-- 오시는 길 섹션 -->
 <section class="section" id="map">
 <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
 <div class="w-full h-96 mb-6">
@@ -112,7 +112,6 @@ main { position:relative; z-index:10; padding-top:100vh; }
 </div>
 </section>
 
-<!-- 무료 체험 섹션 -->
 <section class="section" id="trial">
 <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
 <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
@@ -124,13 +123,12 @@ main { position:relative; z-index:10; padding-top:100vh; }
 </main>
 
 <script>
-// Intersection Observer로 스크롤 시 fade-in
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){ entry.target.classList.add('visible'); }
-  });
-},{threshold:0.1});
-document.querySelectorAll('.section').forEach(sec=>observer.observe(sec));
+// 스크롤 시 UI fade-in
+const uiSection = document.getElementById('ui');
+window.addEventListener('scroll', () => {
+  const scrollPos = window.scrollY;
+  if(scrollPos>50){ uiSection.classList.add('visible'); }
+});
 
 // 섹션 전환
 function showSection(id, btn){
