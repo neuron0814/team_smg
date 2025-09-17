@@ -10,7 +10,7 @@
 body { margin:0; font-family: "Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background-color:#111; color:white; }
 .video-section { position:fixed; top:0; left:0; width:100%; height:100vh; z-index:0; overflow:hidden; }
 .video-section video { width:100%; height:100%; object-fit:cover; }
-.ui-container { position:relative; z-index:10; }
+.ui-container { position:relative; z-index:10; margin-top:100vh; }
 .hidden-section { display:none; opacity:0; transition: opacity 0.5s ease; }
 .active-section { display:block; opacity:1; }
 .card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
@@ -152,6 +152,11 @@ function showSection(id, btn){
   document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
   if(btn) btn.classList.add('active');
 }
+
+// 화살표 클릭 시 스크롤
+scrollArrow.addEventListener('click', () => {
+  window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+});
 </script>
 
 </body>
