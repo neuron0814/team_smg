@@ -7,45 +7,68 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.1/dist/framer-motion.umd.js"></script>
 <style>
-body, html { margin:0; padding:0; overflow-x:hidden; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#111; color:white; height:100vh; }
+body, html {
+  margin:0; padding:0; overflow-x:hidden;
+  font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif;
+  background:#111; color:white; height:100vh;
+}
 
-/* 섹션 래퍼 */
 .section-wrapper { position:relative; width:100%; height:100vh; overflow:hidden; }
 
 /* Video Section */
 .video-section {
-  position: fixed; top:0; left:0; width:100%; height:100vh; z-index:5; overflow:hidden;
+  position: fixed; top:0; left:0; width:100%; height:100vh;
+  z-index:5; overflow:hidden; transition:opacity 0.8s ease;
 }
 .video-section video { width:100%; height:100%; object-fit:cover; }
 
 /* UI Section */
 .ui-section {
   position: relative; z-index:10; min-height:100vh;
-  padding:4rem 2rem 2rem; display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
-  transform: translateY(60px); transition:transform 0.8s ease, opacity 0.8s ease; opacity:0;
+  padding:4rem 2rem 2rem;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+  transform: translateY(120px); transition:transform 0.8s ease, opacity 0.8s ease;
+  opacity:0;
 }
 .ui-section.active { transform: translateY(0); opacity:1; }
 
 /* Cards & Buttons */
-.card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; margin-bottom:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
-.tab-button { display:flex; justify-content:center; align-items:center; gap:0.5rem; border:1px solid white; padding:.5rem 1rem; font-size:.875rem; color:white; background:transparent; cursor:pointer; transition:all 0.3s; margin:.25rem; }
+.card {
+  background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2);
+  border-radius:0.75rem; padding:1rem; margin-bottom:1rem;
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
+}
+.tab-button {
+  flex:1; min-width:120px;
+  display:flex; justify-content:center; align-items:center;
+  border:1px solid white; padding:.5rem 1rem;
+  font-size:.875rem; color:white; background:transparent;
+  cursor:pointer; transition:all 0.3s;
+}
 .tab-button.active { background:white; color:black; font-weight:600; }
-.home-button { margin-top:1rem; padding:.5rem 1rem; border:1px solid white; background:transparent; color:white; cursor:pointer; transition:opacity 0.3s; }
+.home-button {
+  margin-top:1rem; padding:.5rem 1rem;
+  border:1px solid white; background:transparent; color:white;
+  cursor:pointer; transition:opacity 0.3s;
+}
 .home-button:hover { opacity:0.7; }
 
 /* 화살표 깜빡임 fade in/out */
 @keyframes fadeArrow { 0%,100%{opacity:0;} 50%{opacity:1;} }
 .arrow {
   position:absolute; left:50%; transform:translateX(-50%) rotate(90deg);
-  font-size:3rem; color:white; cursor:pointer; opacity:0; z-index:15;
-  animation: fadeArrow 2.5s infinite;
-  bottom:180px; /* 모바일/PC 모두 위로 조정 */
+  font-size:3rem; color:white; cursor:pointer;
+  opacity:0; z-index:15; animation: fadeArrow 2.5s infinite;
+  bottom:150px; /* PC 기본 */
 }
-@media(max-width:768px){ .arrow{bottom:120px;} }
-@media(max-width:480px){ .arrow{bottom:100px;} }
+@media(max-width:768px){ .arrow{bottom:200px;} } /* 모바일에서 더 위로 */
 
 /* Sections */
-section { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; text-align:center; opacity:0; pointer-events:none; margin-bottom:2rem; }
+section {
+  width:100%; display:flex; flex-direction:column;
+  align-items:center; justify-content:flex-start;
+  text-align:center; opacity:0; pointer-events:none; margin-bottom:2rem;
+}
 section.active { opacity:1; pointer-events:auto; }
 </style>
 </head>
@@ -66,9 +89,11 @@ section.active { opacity:1; pointer-events:auto; }
 
     <!-- Home -->
     <section id="home" class="active">
-      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-extrabold mb-4">WELCOME TO TEAM SMG</h1>
+      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-extrabold mb-4 whitespace-nowrap">
+        WELCOME TO TEAM SMG
+      </h1>
       <p class="mb-6">MMA & Jiu Jitsu in Suwon</p>
-      <div class="flex flex-wrap justify-center gap-3">
+      <div class="flex flex-wrap justify-center gap-3 w-full">
         <button class="tab-button" onclick="showTab('coach', this)">👤 강사 소개</button>
         <button class="tab-button" onclick="showTab('schedule', this)">🗓️ 시간표</button>
         <button class="tab-button" onclick="showTab('price', this)">💳 등록비</button>
@@ -125,7 +150,8 @@ section.active { opacity:1; pointer-events:auto; }
     <!-- Map -->
     <section id="map">
       <h2 class="text-2xl font-bold mb-4 border-b border-white/20 pb-2">오시는 길</h2>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000"
+        style="border:0;" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
       <button class="home-button" onclick="showTab('home')">홈으로</button>
     </section>
 
@@ -148,8 +174,16 @@ const uiSection=document.getElementById('ui-section');
 let switched=false;
 
 function switchSection(toUI){
-  if(toUI && !switched){ switched=true; videoSection.style.opacity=0; videoSection.style.pointerEvents='none'; uiSection.classList.add('active'); }
-  else if(!toUI && switched){ switched=false; videoSection.style.opacity=1; videoSection.style.pointerEvents='auto'; uiSection.classList.remove('active'); }
+  if(toUI && !switched){
+    switched=true;
+    videoSection.style.opacity=0; videoSection.style.pointerEvents='none';
+    uiSection.classList.add('active');
+  }
+  else if(!toUI && switched){
+    switched=false;
+    videoSection.style.opacity=1; videoSection.style.pointerEvents='auto';
+    uiSection.classList.remove('active');
+  }
 }
 
 window.addEventListener('wheel', (e)=>{ e.deltaY>0 ? switchSection(true) : switchSection(false); });
@@ -164,15 +198,13 @@ window.addEventListener('touchend',e=>{
 });
 
 const { motion }=window['framer-motion'];
-
 function showTab(id,btn){
+  const target=document.getElementById(id);
+  if(!target) return; // 잘못된 id 방지
   const sections=document.querySelectorAll('#ui-section > section');
-  sections.forEach(sec=>{
-    if(sec.id===id){
-      sec.classList.add('active');
-      motion(sec).animate({opacity:[0,1], y:[20,0]}, {duration:0.6});
-    }else sec.classList.remove('active');
-  });
+  sections.forEach(sec=>sec.classList.remove('active'));
+  target.classList.add('active');
+  motion(target).animate({opacity:[0,1], y:[20,0]}, {duration:0.6});
   document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
 }
