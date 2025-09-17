@@ -1,163 +1,154 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TEAM SMG</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="favicon.png" type="image/png" />
-  <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@300;400;600&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet"/>
-  <style>
-    body { font-family: "Pretendard Variable", "SUIT", "Noto Sans KR", sans-serif; background-color: #1a1a1a; margin: 0; overflow-x: hidden; }
-    .hidden-section { display: none; }
-    .active-section { display: block; }
-
-    /* 스크롤 fade-in */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-    /* 섹션 전환 애니메이션 */
-    .section-transition { opacity: 0; transform: translateY(20px); transition: all 0.5s ease-out; }
-    .section-transition.show { opacity: 1; transform: translateY(0); }
-
-    .home-button { margin-top: 2rem; display: inline-block; padding: 0.5rem 1rem; border: 1px solid white; font-size: 0.875rem; transition: opacity 0.3s ease; }
-    .home-button:hover { opacity: 0.7; }
-    .card { background-color: #1f1f1f; border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; padding: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
-    .tab-button { display: flex; align-items: center; justify-content: center; gap: 0.5rem; border: 1px solid white; padding: 0.5rem 1rem; font-size: 0.875rem; width: 9rem; transition: all 0.3s ease; }
-    .tab-button:hover { opacity: 0.8; }
-    .tab-button.active { background-color: white; color: black; font-weight: 600; }
-    .video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
-    main { position: relative; z-index: 10; }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TEAM SMG</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="favicon.png" type="image/png" />
+<link href="https://fonts.googleapis.com/css2?family=SUIT:wght@300;400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet"/>
+<style>
+body { font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#1a1a1a; margin:0; overflow-x:hidden; }
+.video-bg { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
+main { position:relative; z-index:10; }
+.fade-in { opacity:0; transform:translateY(30px); transition:all 0.7s ease-out; }
+.fade-in.visible { opacity:1; transform:translateY(0); }
+.section { display:none; opacity:0; transform:translateY(30px); transition:all 0.5s ease-out; }
+.section.active { display:block; opacity:1; transform:translateY(0); }
+.home-button { margin-top:2rem; display:inline-block; padding:0.5rem 1rem; border:1px solid white; font-size:0.875rem; transition:opacity 0.3s; }
+.home-button:hover{opacity:0.7;}
+.card { background-color:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.4);}
+.tab-button { display:flex; align-items:center; justify-content:center; gap:0.5rem; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; width:9rem; transition:all 0.3s;}
+.tab-button:hover{opacity:0.8;}
+.tab-button.active{background:white;color:black;font-weight:600;}
+</style>
 </head>
-<body class="text-white min-h-screen px-4 overflow-x-hidden">
+<body class="text-white min-h-screen px-4">
 
-  <!-- 배경 영상 -->
-  <video class="video-bg" autoplay muted playsinline loop>
-    <source src="video.mp4" type="video/mp4">
-  </video>
+<!-- 배경 영상 -->
+<video class="video-bg" autoplay muted playsinline loop>
+<source src="video.mp4" type="video/mp4">
+</video>
 
-  <main>
-    <!-- 홈 섹션 -->
-    <section class="py-24 md:py-36 text-center max-w-5xl mx-auto fade-in section-transition show" id="home">
-      <h1 class="text-center font-extrabold mb-4 text-[clamp(2rem,5vw,3.5rem)] leading-tight break-words whitespace-normal" style="font-weight: 800; font-size: clamp(1.5rem, 6vw, 3rem);">WELCOME TO TEAM SMG</h1>
-      <p class="text-base md:text-lg mb-10 whitespace-normal">MMA & Jiu Jitsu in Suwon</p>
-      <div class="flex flex-wrap justify-center items-center gap-3">
-        <button class="tab-button" onclick="showSection('coach', this)">👤 강사 소개</button>
-        <button class="tab-button" onclick="showSection('schedule', this)">🗓️ 시간표</button>
-        <button class="tab-button" onclick="showSection('price', this)">💳 등록비</button>
-        <button class="tab-button" onclick="showSection('facility', this)">🏋️ 시설</button>
-        <button class="tab-button" onclick="showSection('map', this)">📍 오시는 길</button>
-        <button class="tab-button" onclick="showSection('trial', this)">🎟️ 무료 체험</button>
-      </div>
-      <div class="text-center mt-6">
-        <a href="https://www.instagram.com/smgacademy_/" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-white hover:underline">
-          인스타그램 @smgacademy_
-        </a>
-      </div>
-    </section>
+<main>
+<!-- 홈 섹션 -->
+<section class="fade-in section active" id="home">
+<h1 class="text-center font-extrabold mb-4 text-[clamp(2rem,5vw,3.5rem)] leading-tight break-words whitespace-normal">WELCOME TO TEAM SMG</h1>
+<p class="text-base md:text-lg mb-10 whitespace-normal">MMA & Jiu Jitsu in Suwon</p>
+<div class="flex flex-wrap justify-center items-center gap-3">
+<button class="tab-button" onclick="showSection('coach', this)">👤 강사 소개</button>
+<button class="tab-button" onclick="showSection('schedule', this)">🗓️ 시간표</button>
+<button class="tab-button" onclick="showSection('price', this)">💳 등록비</button>
+<button class="tab-button" onclick="showSection('facility', this)">🏋️ 시설</button>
+<button class="tab-button" onclick="showSection('map', this)">📍 오시는 길</button>
+<button class="tab-button" onclick="showSection('trial', this)">🎟️ 무료 체험</button>
+</div>
+<div class="text-center mt-6">
+<a href="https://www.instagram.com/smgacademy_/" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-white hover:underline">
+인스타그램 @smgacademy_
+</a>
+</div>
+</section>
 
-    <!-- 기존 섹션 모두 그대로 유지, section-transition 추가 -->
-    <section class="hidden-section fade-in section-transition py-24 px-4 max-w-4xl mx-auto text-center" id="coach">
-      <h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
-      <div class="card inline-block mt-6">
-        <p class="text-base font-semibold mb-1">관장 박수오</p>
-        <p class="text-sm text-white/90">주짓수 브라운벨트 / 종합격투기 지도사 자격증</p>
-      </div>
-      <div class="text-center">
-        <button class="home-button" onclick="showSection('home')">홈으로</button>
-      </div>
-    </section>
+<!-- 기존 섹션 모두 유지 -->
+<section class="fade-in section" id="coach">
+<h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
+<div class="card inline-block mt-6">
+<p class="text-base font-semibold mb-1">관장 박수오</p>
+<p class="text-sm text-white/90">주짓수 브라운벨트 / 종합격투기 지도사 자격증</p>
+</div>
+<div class="text-center">
+<button class="home-button" onclick="showSection('home')">홈으로</button>
+</div>
+</section>
 
-    <section class="hidden-section fade-in section-transition py-24 px-4 max-w-4xl mx-auto text-center" id="schedule">
-      <h2 class="text-4xl font-bold mb-8 text-center leading-snug border-b border-white/20 pb-2">수업 시간표</h2>
-      <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-sm text-left">
-        <li class="card"><strong class="block text-white text-base mb-1">월요일</strong><p class="text-white/90">주짓수 - 오전 10:30, 오후 9:30</p></li>
-        <li class="card"><strong class="block text-white text-base mb-1">화요일</strong><p class="text-white/90">MMA - 오후 9:30</p></li>
-        <li class="card"><strong class="block text-white text-base mb-1">수요일</strong><p class="text-white/90">주짓수 - 오전 10:30, 오후 9:30</p></li>
-        <li class="card"><strong class="block text-white text-base mb-1">목요일</strong><p class="text-white/90">MMA - 오후 9:30</p></li>
-        <li class="card sm:col-span-2"><strong class="block text-white text-base mb-1">금요일</strong><p class="text-white/90">스파링 데이 - 오전 10:30, 오후 9:30</p></li>
-      </ul>
-      <div class="text-center">
-        <button class="home-button" onclick="showSection('home')">홈으로</button>
-      </div>
-    </section>
+<section class="fade-in section" id="schedule">
+<h2 class="text-4xl font-bold mb-8 text-center leading-snug border-b border-white/20 pb-2">수업 시간표</h2>
+<ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-sm text-left">
+<li class="card"><strong class="block text-white text-base mb-1">월요일</strong><p class="text-white/90">주짓수 - 오전 10:30, 오후 9:30</p></li>
+<li class="card"><strong class="block text-white text-base mb-1">화요일</strong><p class="text-white/90">MMA - 오후 9:30</p></li>
+<li class="card"><strong class="block text-white text-base mb-1">수요일</strong><p class="text-white/90">주짓수 - 오전 10:30, 오후 9:30</p></li>
+<li class="card"><strong class="block text-white text-base mb-1">목요일</strong><p class="text-white/90">MMA - 오후 9:30</p></li>
+<li class="card sm:col-span-2"><strong class="block text-white text-base mb-1">금요일</strong><p class="text-white/90">스파링 데이 - 오전 10:30, 오후 9:30</p></li>
+</ul>
+<div class="text-center">
+<button class="home-button" onclick="showSection('home')">홈으로</button>
+</div>
+</section>
 
-    <section class="hidden-section fade-in section-transition py-24 px-4 max-w-5xl mx-auto" id="map">
-      <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
-      <div class="w-full h-96 mb-6">
-        <iframe allowfullscreen="" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
-      </div>
-      <p class="text-center text-sm text-white/90 mb-6">경기 수원시 장안구 만석로19번길 11-7 306호 수원멀티짐</p>
-      <div class="text-center">
-        <button class="home-button" onclick="showSection('home')">홈으로</button>
-      </div>
-    </section>
+<section class="fade-in section" id="price">
+<h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
+<ul class="max-w-md mx-auto space-y-4 text-left text-sm">
+<li class="card"><strong class="block text-white text-base mb-1">1개월</strong><p class="text-white/90">15만원</p></li>
+<li class="card"><strong class="block text-white text-base mb-1">3개월</strong><p class="text-white/90">14만원 (월)</p></li>
+<li class="card"><strong class="block text-white text-base mb-1">6개월</strong><p class="text-white/90">13만원 (월)</p></li>
+</ul>
+<div class="text-center mt-6">
+<button class="home-button" onclick="showSection('home')">홈으로</button>
+</div>
+</section>
 
-    <section class="hidden-section fade-in section-transition py-24 px-4 max-w-4xl mx-auto text-center" id="trial">
-      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
-      <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
-      <div class="text-center mt-6">
-        <button class="home-button" onclick="showSection('home')">홈으로</button>
-      </div>
-    </section>
+<section class="fade-in section" id="facility">
+<h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
+<div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
+<div class="card"><h3 class="text-xl font-semibold mb-2">트레이닝 매트</h3><p class="text-sm text-white/80">청결하게 관리되는 넓은 매트 공간에서 안전하게 훈련할 수 있습니다.</p></div>
+<div class="card"><h3 class="text-xl font-semibold mb-2">샤워 시설</h3><p class="text-sm text-white/80">운동 후 상쾌하게 마무리할 수 있도록 샤워실을 제공합니다.</p></div>
+<div class="card"><h3 class="text-xl font-semibold mb-2">웨이트 장비</h3><p class="text-sm text-white/80">보강 훈련을 위한 기본적인 웨이트 기구를 갖추고 있습니다.</p></div>
+<div class="card"><h3 class="text-xl font-semibold mb-2">휴게 공간</h3><p class="text-sm text-white/80">회원들이 편하게 쉴 수 있는 휴게 공간을 마련했습니다.</p></div>
+</div>
+<div class="text-center mt-6">
+<button class="home-button" onclick="showSection('home')">홈으로</button>
+</div>
+</section>
 
-    <section class="hidden-section fade-in section-transition py-24 px-4 max-w-4xl mx-auto text-center" id="price">
-      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
-      <ul class="max-w-md mx-auto space-y-4 text-left text-sm">
-        <li class="card"><strong class="block text-white text-base mb-1">1개월</strong><p class="text-white/90">15만원</p></li>
-        <li class="card"><strong class="block text-white text-base mb-1">3개월</strong><p class="text-white/90">14만원 (월)</p></li>
-        <li class="card"><strong class="block text-white text-base mb-1">6개월</strong><p class="text-white/90">13만원 (월)</p></li>
-      </ul>
-      <div class="text-center mt-6">
-        <button class="home-button" onclick="showSection('home')">홈으로</button>
-      </div>
-    </section>
+<section class="fade-in section" id="map">
+<h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
+<div class="w-full h-96 mb-6">
+<iframe allowfullscreen height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
+</div>
+<p class="text-center text-sm text-white/90 mb-6">경기 수원시 장안구 만석로19번길 11-7 306호 수원멀티짐</p>
+<div class="text-center">
+<button class="home-button" onclick="showSection('home')">홈으로</button>
+</div>
+</section>
 
-    <section class="hidden-section fade-in section-transition py-24 px-4 max-w-4xl mx-auto text-center" id="facility">
-      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
-      <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
-      </div>
-      <div class="text-center mt-6">
-        <button class="home-button" onclick="showSection('home')">홈으로</button>
-      </div>
-    </section>
-  </main>
+<section class="fade-in section" id="trial">
+<h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
+<p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
+<div class="text-center mt-6">
+<button class="home-button" onclick="showSection('home')">홈으로</button>
+</div>
+</section>
 
-  <script>
-    function showSection(id, btn) {
-      const sections = ['home','coach','schedule','map','trial','price','facility'];
-      sections.forEach(secId => {
-        const el = document.getElementById(secId);
-        if(el){
-          el.classList.remove('show');
-          setTimeout(()=>{ 
-            el.classList.add('hidden-section'); 
-            el.classList.remove('active-section'); 
-          }, 400);
-        }
-      });
-      const target = document.getElementById(id);
-      if(target){
-        target.classList.remove('hidden-section');
-        target.classList.add('active-section');
-        setTimeout(()=>target.classList.add('show'),50);
-      }
-      document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
-      if(btn) btn.classList.add('active');
+</main>
+
+<script>
+const sections = document.querySelectorAll('.section');
+
+window.addEventListener('scroll', () => {
+  const triggerBottom = window.innerHeight * 0.85;
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if(top < triggerBottom) sec.classList.add('visible');
+  });
+});
+window.addEventListener('load', ()=>window.dispatchEvent(new Event('scroll')));
+
+function showSection(id, btn) {
+  sections.forEach(sec => {
+    if(sec.id === id){
+      sec.classList.add('active');
+      setTimeout(()=>sec.classList.add('visible'),50);
+    } else {
+      sec.classList.remove('visible');
+      setTimeout(()=>sec.classList.remove('active'),300);
     }
+  });
+  document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+</script>
 
-    const faders = document.querySelectorAll('.fade-in');
-    window.addEventListener('scroll',()=>{
-      const triggerBottom = window.innerHeight*0.85;
-      faders.forEach(fade=>{
-        const top = fade.getBoundingClientRect().top;
-        if(top < triggerBottom) fade.classList.add('visible');
-      });
-    });
-    window.addEventListener('load',()=>window.dispatchEvent(new Event('scroll')));
-  </script>
 </body>
 </html>
-
