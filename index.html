@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>TEAM SMG</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.1/dist/framer-motion.umd.js"></script>
 <link rel="icon" href="favicon.png" type="image/png" />
 <style>
 body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#1a1a1a; overflow-x:hidden; }
 .video-section { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
 .video-section video { width:100%; height:100%; object-fit:cover; }
+.scroll-arrow { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); font-size:2rem; color:white; animation:arrowUpDown 1.2s ease-in-out infinite; }
+@keyframes arrowUpDown { 0%,100% { transform:translate(-50%,0); } 50% { transform:translate(-50%,10px); } }
 .ui-section { position:relative; z-index:10; min-height:100vh; padding:4rem 1rem 2rem; opacity:0; transform:translateY(100vh); transition:all 0.7s ease; }
 .section { display:none; opacity:0; transform:translateY(30px); transition:all 0.5s ease; }
 .section.active { display:block; opacity:1; transform:translateY(0);}
@@ -20,13 +21,11 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 .tab-button { display:flex; align-items:center; justify-content:center; gap:0.5rem; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; width:9rem; transition:all 0.3s;}
 .tab-button:hover{opacity:0.8;}
 .tab-button.active{background:white;color:black;font-weight:600;}
-.scroll-arrow { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); font-size:2rem; color:white; animation:arrowUpDown 1.2s ease-in-out infinite; }
-@keyframes arrowUpDown { 0%,100% { transform:translate(-50%,0); } 50% { transform:translate(-50%,10px); } }
 </style>
 </head>
 <body class="text-white">
 
-<!-- 영상 풀스크린 -->
+<!-- 풀스크린 영상 -->
 <div class="video-section">
   <video autoplay muted playsinline loop>
     <source src="video.mp4" type="video/mp4">
@@ -120,14 +119,20 @@ body { margin:0; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-se
 </main>
 
 <script>
+// 스크롤에 따라 UI 등장/사라짐
 const uiSection = document.getElementById('ui');
 window.addEventListener('scroll', () => {
-  if(window.scrollY > 50){
+  const scrollPos = window.scrollY;
+  if(scrollPos > 50){
     uiSection.style.opacity = '1';
     uiSection.style.transform = 'translateY(0)';
+  } else {
+    uiSection.style.opacity = '0';
+    uiSection.style.transform = 'translateY(100vh)';
   }
 });
 
+// 탭 섹션 전환
 function showSection(id, btn){
   const sections = document.querySelectorAll('.section');
   sections.forEach(sec=>{
@@ -143,6 +148,5 @@ function showSection(id, btn){
   if(btn) btn.classList.add('active');
 }
 </script>
-
 </body>
 </html>
