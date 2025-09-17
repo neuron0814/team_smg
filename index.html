@@ -17,11 +17,7 @@
       overflow-x: hidden;
     }
 
-    /* Hidden Section */
-    .hidden-section { display: none; }
-    .active-section { display: block; }
-
-    /* Video full screen */
+    /* Video Section */
     .video-container {
       position: fixed;
       top: 0;
@@ -32,31 +28,21 @@
       transition: opacity 1s ease-in-out;
     }
 
-    /* Arrow animation */
+    /* Scroll Arrow */
     .scroll-arrow {
       position: absolute;
       bottom: 2rem;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) rotate(90deg); /* 화살표를 90도 회전시켜 눕힘 */
       font-size: 3rem;
       color: white;
       font-family: 'Orbitron', sans-serif;
       cursor: pointer;
-      opacity: 0; /* Initially hidden */
-      animation: arrowUpDown 1s ease-in-out infinite;
-      transition: opacity 1s ease-in-out 1s; /* Delays the appearance by 1 second */
+      opacity: 0; /* 처음에는 안 보임 */
+      transition: opacity 1s ease-in-out 1s; /* 1초 후에 보이도록 설정 */
     }
 
-    @keyframes arrowUpDown {
-      0%, 100% {
-        transform: translate(-50%, 0);
-      }
-      50% {
-        transform: translate(-50%, 10px);
-      }
-    }
-
-    /* UI transition */
+    /* UI Section */
     .ui-section {
       opacity: 0;
       transform: translateY(100vh);
@@ -68,7 +54,17 @@
       transform: translateY(0);
     }
 
-    /* Content Section */
+    /* Fade-in effect for sections */
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .fade-in.active {
+      opacity: 1;
+    }
+
+    /* Other styles */
     .card {
       background-color: #1f1f1f;
       border: 1px solid rgba(255,255,255,0.2);
@@ -77,7 +73,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
-    /* Tab Buttons */
     .tab-button {
       display: flex;
       align-items: center;
@@ -99,10 +94,10 @@
     <!-- Video Section -->
     <div class="video-container">
       <video src="video.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-      <div class="scroll-arrow">&#8595;</div> <!-- Change to down arrow -->
+      <div class="scroll-arrow">>>> </div>
     </div>
 
-    <!-- UI Section (Hidden at first) -->
+    <!-- UI Section -->
     <section id="ui" class="ui-section py-24 px-4 max-w-5xl mx-auto text-center">
       <h1 class="text-4xl font-bold text-white mb-8">WELCOME TO TEAM SMG</h1>
       <p class="text-lg text-white mb-10">MMA & Jiu Jitsu in Suwon</p>
@@ -121,9 +116,8 @@
       </div>
     </section>
 
-    <!-- Sections (each section as per original code) -->
-
-    <section class="hidden-section py-24 px-4 max-w-4xl mx-auto text-center" id="coach">
+    <!-- Sections (Original Content Kept) -->
+    <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="coach">
       <h2 class="text-4xl font-bold mb-4 border-b border-white/20 pb-2">강사 소개</h2>
       <div class="card inline-block mt-6">
         <p class="text-base font-semibold mb-1">관장 박수오</p>
@@ -134,7 +128,7 @@
       </div>
     </section>
 
-    <section class="hidden-section py-24 px-4 max-w-4xl mx-auto text-center" id="schedule">
+    <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="schedule">
       <h2 class="text-4xl font-bold mb-8 text-center leading-snug border-b border-white/20 pb-2">수업 시간표</h2>
       <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto text-sm text-left">
         <li class="card"><strong class="block text-white text-base mb-1">월요일</strong><p class="text-white/90">주짓수 - 오전 10:30, 오후 9:30</p></li>
@@ -148,56 +142,86 @@
       </div>
     </section>
 
-    <section class="hidden-section py-24 px-4 max-w-5xl mx-auto" id="map">
+    <section class="hidden-section fade-in py-24 px-4 max-w-5xl mx-auto text-center" id="map">
       <h2 class="text-4xl font-bold mb-6 text-center border-b border-white/20 pb-2">오시는 길</h2>
       <div class="w-full h-96 mb-6">
         <iframe allowfullscreen="" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3174.3194112280867!2d126.983363!3d37.295545!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z7Lac7Y2464Sk!5e0!3m2!1sko!2skr!4v1692256000000" style="border:0;" width="100%"></iframe>
       </div>
+      <p class="text-center text-sm text-white/90 mb-6">경기 수원시 장안구 만석로19번길 11-7 306호 수원멀티짐</p>
       <div class="text-center">
         <button class="home-button" onclick="showSection('home')">홈으로</button>
       </div>
     </section>
 
-    <!-- Add other sections like 'trial', 'price', etc. -->
+    <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="trial">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">무료 체험</h2>
+      <p class="text-sm text-white/90">저희 체육관은 종목당 1회 무료 체험을 제공합니다. 별다른 예약 없이 수업 시간 10분 전까지 오시기만 하면 됩니다.</p>
+      <div class="text-center mt-6">
+        <button class="home-button" onclick="showSection('home')">홈으로</button>
+      </div>
+    </section>
 
+    <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="price">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">등록비</h2>
+      <ul class="max-w-md mx-auto space-y-4 text-left text-sm">
+        <li class="card"><strong class="block text-white text-base mb-1">1개월</strong><p class="text-white/90">15만원</p></li>
+        <li class="card"><strong class="block text-white text-base mb-1">3개월</strong><p class="text-white/90">14만원 (월)</p></li>
+        <li class="card"><strong class="block text-white text-base mb-1">6개월</strong><p class="text-white/90">13만원 (월)</p></li>
+      </ul>
+      <div class="text-center mt-6">
+        <button class="home-button" onclick="showSection('home')">홈으로</button>
+      </div>
+    </section>
+
+    <section class="hidden-section fade-in py-24 px-4 max-w-4xl mx-auto text-center" id="facility">
+      <h2 class="text-4xl font-bold mb-6 border-b border-white/20 pb-2">시설 안내</h2>
+      <div class="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
+        <div class="card"><h3 class="text-xl font-semibold mb-2">트레이닝 매트</h3><p class="text-sm text-white/80">청결하게 관리되는 넓은 매트 공간에서 안전하게 훈련할 수 있습니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">샤워 시설</h3><p class="text-sm text-white/80">운동 후 상쾌하게 마무리할 수 있도록 샤워실을 제공합니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">웨이트 장비</h3><p class="text-sm text-white/80">보강 훈련을 위한 기본적인 웨이트 기구를 갖추고 있습니다.</p></div>
+        <div class="card"><h3 class="text-xl font-semibold mb-2">휴게 공간</h3><p class="text-sm text-white/80">회원들이 편하게 쉴 수 있는 휴게 공간을 마련했습니다.</p></div>
+      </div>
+      <div class="text-center mt-6">
+        <button class="home-button" onclick="showSection('home')">홈으로</button>
+      </div>
+    </section>
   </main>
 
   <script>
-    // Scroll event to hide/show UI based on scroll position
-    const uiSection = document.getElementById('ui');
-    const scrollArrow = document.querySelector('.scroll-arrow');
-
-    window.addEventListener('load', () => {
-      // Wait for 1 second after the video loads, then show the arrow
-      setTimeout(() => {
-        scrollArrow.style.opacity = 1;
-      }, 1000);
-    });
-
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY;
-      if (scrollPos > window.innerHeight * 0.2) {
-        uiSection.classList.add('active');
-      } else {
-        uiSection.classList.remove('active');
-      }
-    });
-
-    // Tab Section Show/Hide functionality
+    // 섹션 전환 함수
     function showSection(id, btn) {
-      const sections = document.querySelectorAll('.hidden-section');
-      sections.forEach(sec => {
-        if (sec.id === id) {
-          sec.style.display = 'block';
-          setTimeout(() => sec.classList.add('active'), 50);
-        } else {
-          sec.classList.remove('active');
-          setTimeout(() => sec.style.display = 'none', 300);
+      ['home', 'coach', 'schedule', 'map', 'trial', 'price', 'facility'].forEach(sec => {
+        const el = document.getElementById(sec);
+        if (el) {
+          el.classList.add('hidden-section');
+          el.classList.remove('active-section');
         }
       });
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.remove('hidden-section');
+        target.classList.add('active-section');
+      }
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
     }
+
+    // 스크롤 이벤트 처리
+    document.addEventListener('scroll', function() {
+      const videoContainer = document.querySelector('.video-container');
+      const arrow = document.querySelector('.scroll-arrow');
+      const uiSection = document.getElementById('ui');
+      
+      if (window.scrollY > videoContainer.clientHeight) {
+        videoContainer.style.opacity = '0';
+        uiSection.classList.add('active');
+        arrow.style.opacity = '1';
+      } else {
+        videoContainer.style.opacity = '1';
+        uiSection.classList.remove('active');
+        arrow.style.opacity = '0';
+      }
+    });
   </script>
 </body>
 </html>
