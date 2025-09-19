@@ -12,18 +12,19 @@ body, html { margin:0; padding:0; overflow:hidden; font-family:"Pretendard Varia
 .video-section video { width:100%; height:100%; object-fit:cover; }
 .enter { opacity:1; transform:translateY(0); pointer-events:auto; }
 .leave { opacity:0; transform:translateY(50px); pointer-events:none; }
-.ui-section { background:#111; padding:2rem 1rem; box-sizing:border-box; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-.ui-section section { display:none; position:relative; width:100%; min-height:100%; padding-top:4rem; text-align:center; animation:fadeInUp 0.6s ease; }
+.ui-section { background:#111; padding:2rem; box-sizing:border-box; overflow-y:auto; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; }
+.ui-section section { display:none; position:relative; width:100%; max-width:600px; padding-top:4rem; text-align:center; animation:fadeInUp 0.6s ease; }
 .ui-section section.active { display:flex; flex-direction:column; justify-content:flex-start; }
 @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
 .arrow { position:absolute; left:50%; transform:translateX(-50%) rotate(90deg); font-size:3rem; color:white; cursor:pointer; opacity:0; animation:fadeArrow 2.5s infinite; bottom:100px; }
 @keyframes fadeArrow { 0%,100%{opacity:0;} 50%{opacity:1;} }
-@media (max-width:768px){ .arrow{bottom:120px; font-size:2.5rem;} .ui-section { padding:1.5rem 0.5rem; } .tab-button { font-size:0.75rem; min-width:6rem; padding:0.4rem 0.8rem; } }
-@media (max-width:480px){ .arrow{bottom:100px; font-size:2rem;} .ui-section { padding:1rem 0.5rem; } .tab-button { font-size:0.7rem; min-width:5rem; padding:0.3rem 0.6rem; } }
-.card { background:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; margin-bottom:1rem; }
-.tab-button { flex:1 1 auto; text-align:center; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; background:transparent; color:white; transition:all 0.3s; cursor:pointer; }
+.tab-button { flex:1 1 120px; min-width:120px; text-align:center; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; background:transparent; color:white; transition:all 0.3s; cursor:pointer; }
 .tab-button.active { background:white; color:black; font-weight:600; }
 .home-button { margin-top:1rem; padding:0.5rem 1rem; border:1px solid white; background:transparent; color:white; cursor:pointer; }
+.card { background:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; margin-bottom:1rem; }
+h1 { font-size:clamp(1.5rem, 5vw, 3.5rem); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+@media (max-width:768px){ .arrow{bottom:120px; font-size:2.5rem;} .ui-section { padding:1.5rem; } .tab-button { flex:1 1 100px; min-width:100px; font-size:0.8rem; padding:0.4rem 0.8rem; } h1 { font-size:clamp(1.2rem, 6vw, 3rem); } }
+@media (max-width:480px){ .arrow{bottom:100px; font-size:2rem;} .ui-section { padding:1rem; } .tab-button { flex:1 1 90px; min-width:90px; font-size:0.75rem; padding:0.3rem 0.6rem; } h1 { font-size:clamp(1rem, 7vw, 2.5rem); } }
 </style>
 </head>
 <body>
@@ -32,11 +33,11 @@ body, html { margin:0; padding:0; overflow:hidden; font-family:"Pretendard Varia
     <video autoplay muted loop playsinline>
       <source src="video.mp4" type="video/mp4">
     </video>
-    <div class="arrow" id="scroll-arrow" aria-label="스크롤 아래로">&gt;&gt;&gt;</div>
+    <div class="arrow" id="scroll-arrow">&gt;&gt;&gt;</div>
   </div>
   <div class="ui-section leave" id="ui-section">
     <section id="home" class="active">
-      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-extrabold mb-4 whitespace-nowrap">누구나 쉽게 배우는 MMA & 주짓수</h1>
+      <h1 class="font-extrabold mb-4">누구나 쉽게 배우는 MMA & 주짓수</h1>
       <div class="flex flex-wrap justify-center gap-3" id="tab-buttons" role="tablist"></div>
     </section>
   </div>
@@ -72,16 +73,11 @@ function createTabs(){
   tabs.forEach(tab=>{
     const btn = document.createElement('button');
     btn.className='tab-button';
-    btn.setAttribute('role','tab');
-    btn.setAttribute('aria-controls', tab.id);
-    btn.setAttribute('tabindex','0');
     btn.innerText = tab.label;
     btn.addEventListener('click', ()=>showTab(tab.id, btn));
-    btn.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') showTab(tab.id, btn); });
     tabContainer.appendChild(btn);
     const section = document.createElement('section');
     section.id = tab.id;
-    section.setAttribute('role','tabpanel');
     section.innerHTML = tab.content + `<button class="home-button" onclick="showTab('home')">홈으로</button>`;
     uiSection.appendChild(section);
   });
