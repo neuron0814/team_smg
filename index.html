@@ -1,239 +1,128 @@
 import React from "react";
+import Head from "next/head";
 
-// 수원멀티짐 - 단일 파일 React 컴포넌트
-// Tailwind CSS가 셋업되어 있는 환경에서 바로 사용 가능합니다.
-// 사용: 페이지에 <SuwonMultiGymLanding /> 렌더링
-
+// Tailwind CDN 사용, GitHub 웹에서 바로 배포 가능
 export default function SuwonMultiGymLanding() {
   return (
-    <div className="min-h-screen text-gray-900 antialiased bg-white">
-      {/* NAVBAR */}
-      <header className="fixed inset-x-0 top-0 z-40 bg-white/80 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-md bg-black flex items-center justify-center text-white font-bold">SM</div>
+    <>
+      <Head>
+        <title>수원멀티짐 | 장안구 유일 MMA 체육관</title>
+        <meta name="description" content="수원멀티짐 - 키즈반, 성인반, 1:1 PT, MMA와 주짓수 체육관" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+      </Head>
+
+      <div className="min-h-screen text-gray-900 antialiased bg-white">
+        {/* NAVBAR */}
+        <header className="fixed inset-x-0 top-0 z-40 bg-white/80 backdrop-blur-md">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-md bg-black flex items-center justify-center text-white font-bold">SM</div>
+                <div>
+                  <div className="text-sm font-semibold">수원멀티짐</div>
+                  <div className="text-xs text-gray-500 -mt-0.5">장안구 유일 MMA 체육관</div>
+                </div>
+              </div>
+              <nav className="hidden md:flex items-center gap-6 text-sm">
+                {['프로그램','#schedule','PT','#contact'].map((item, idx) => (
+                  <a key={idx} href={item === '프로그램' ? '#programs' : item} className="hover:text-black/70">{item}</a>
+                ))}
+              </nav>
+              <a href="#naver-reserve" className="hidden sm:inline-block rounded-full bg-red-600 text-white px-4 py-2 text-sm font-medium hover:bg-red-700">무료체험 예약</a>
+            </div>
+          </div>
+        </header>
+
+        <main className="pt-20">
+          {/* HERO */}
+          <section className="relative h-[70vh] w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1519222970733-f546218fa6d7?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="gym-hero" className="w-full h-full object-cover grayscale brightness-75" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white max-w-2xl px-4">
+                <h1 className="text-3xl md:text-5xl font-extrabold">장안구 유일 MMA 체육관</h1>
+                <p className="mt-4 text-lg md:text-xl opacity-90">수원멀티짐에서 함께 강해집시다.</p>
+                <div className="mt-6 flex gap-3 flex-wrap justify-center">
+                  <a href="#naver-reserve" className="inline-flex items-center gap-2 rounded-full bg-red-600 px-4 py-2 font-semibold shadow hover:bg-red-700">무료체험 예약</a>
+                  <a href="#programs" className="inline-flex items-center gap-2 rounded-full bg-white/90 text-black px-4 py-2 font-medium hover:brightness-95">프로그램 보기</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* PROGRAMS */}
+          <section id="programs" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-2xl font-bold">프로그램</h2>
+            <p className="mt-2 text-sm text-gray-600">키즈반 · 성인반 · 1:1 PT</p>
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {title: '키즈반 (초3 ~ 중1)', schedule: ['16:00 ~ 16:50','18:00 ~ 18:50','20:00 ~ 20:50'], desc: '특공무술 + 주짓수 중심. 기초 체력과 자신감 향상.', note: '월~금 운영'},
+                {title: '성인반 (중2 ~ 성인)', schedule: ['10:30 ~ 11:30','20:00 ~ 21:00','21:30 ~ 22:30'], desc: 'MMA + 주짓수로 실전과 기술을 동시에 수련.', note: '월~금 운영', extra: ['월/수/금: 주짓수','화/목: 종합격투기 MMA']},
+                {title: '종합격투기 PT', schedule: ['시간 개별 조율'], desc: '1:1 맞춤 트레이닝으로 목표에 빠르게 도달하세요.', note: ''}
+              ].map((p,i)=>(
+                <article key={i} className="border rounded-xl p-5 hover:shadow-md transition flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold">{p.title}</h3>
+                      {p.note && <span className="text-xs text-gray-500">{p.note}</span>}
+                    </div>
+                    <p className="mt-3 text-sm text-gray-600">{p.desc}</p>
+                    <div className="mt-4 text-sm">
+                      <div className="font-medium">시간</div>
+                      <ul className="mt-1 text-sm leading-7">{p.schedule.map((t,i)=><li key={i}>{t}</li>)}</ul>
+                      {p.extra && <ul className="mt-1 text-gray-600 text-sm">{p.extra.map((e,i)=><li key={i}>{e}</li>)}</ul>}
+                    </div>
+                  </div>
+                  {p.title==='종합격투기 PT' && <a href="#contact" className="mt-4 inline-block w-full text-center rounded-full border px-4 py-2 text-sm font-semibold hover:bg-black/5">문의하기</a>}
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* SCHEDULE */}
+          <section id="schedule" className="bg-gray-50 py-10">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-2xl font-bold">수업 시간표</h2>
+              <p className="mt-2 text-sm text-gray-600">모바일에 최적화된 세로형 시간표</p>
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[{title:'키즈반 (초3~중1) — 월~금 운영', times:['16:00 ~ 16:50','18:00 ~ 18:50'], note:'특공무술 + 주짓수'},
+                  {title:'성인반 (중2~성인) — 월~금 운영', times:['10:30 ~ 11:30','20:00 ~ 21:00','21:30 ~ 22:30'], note:'월/수/금: 주짓수, 화/목: 종합격투기 MMA'}].map((s,i)=>(
+                  <div key={i} className="p-5 bg-white border rounded-lg">
+                    <h3 className="font-semibold">{s.title}</h3>
+                    <ul className="mt-3 text-sm leading-8">{s.times.map((t,j)=><li key={j}>🕓 {t}</li>)}</ul>
+                    <div className="mt-3 text-sm text-gray-600">주 수업: {s.note}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* CTA / Reservation */}
+          <section id="naver-reserve" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="rounded-xl bg-gradient-to-r from-black/90 to-gray-800 text-white p-8 md:flex md:items-center md:justify-between">
               <div>
-                <div className="text-sm font-semibold">수원멀티짐</div>
-                <div className="text-xs text-gray-500 -mt-0.5">장안구 유일 MMA 체육관</div>
+                <h3 className="text-xl font-bold">무료체험 신청</h3>
+                <p className="mt-2 text-sm text-gray-200">네이버 예약으로 간편하게 예약하세요. 키즈반/성인반 선택 가능.</p>
+              </div>
+              <div className="mt-6 md:mt-0">
+                <a href="https://booking.naver.com/" target="_blank" rel="noreferrer" className="inline-block rounded-full bg-red-600 px-5 py-3 font-semibold hover:bg-red-700">네이버 예약으로 가기</a>
               </div>
             </div>
+          </section>
 
-            <nav className="hidden md:flex items-center gap-6 text-sm">
-              <a href="#programs" className="hover:text-black/70">프로그램</a>
-              <a href="#schedule" className="hover:text-black/70">시간표</a>
-              <a href="#pt" className="hover:text-black/70">PT</a>
-              <a href="#contact" className="hover:text-black/70">오시는 길</a>
-            </nav>
-
-            <div className="flex items-center gap-3">
-              <a
-                href="#naver-reserve"
-                className="hidden sm:inline-block rounded-full bg-red-600 text-white px-4 py-2 text-sm font-medium hover:bg-red-700"
-              >
-                무료체험 예약
-              </a>
-              <button className="md:hidden inline-flex items-center justify-center p-2 rounded-md border">
-                <span className="sr-only">Open menu</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="pt-20">
-        {/* HERO */}
-        <section className="relative">
-          <div className="h-[60vh] md:h-[70vh] w-full overflow-hidden relative">
-            {/* 배경 비디오/이미지 자리 */}
-            <div className="absolute inset-0">
-              <img
-                src="https://images.unsplash.com/photo-1519222970733-f546218fa6d7?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
-                alt="gym-hero"
-                className="w-full h-full object-cover grayscale brightness-75"
-              />
-            </div>
-
-            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-              <div className="text-white max-w-2xl">
-                <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">장안구 유일 MMA 체육관</h1>
-                <p className="mt-3 text-lg md:text-xl opacity-90">수원멀티짐에서 함께 강해집시다.</p>
-
-                <div className="mt-6 flex gap-3 flex-wrap">
-                  <a
-                    href="#naver-reserve"
-                    className="inline-flex items-center gap-2 rounded-full bg-red-600 px-4 py-2 font-semibold shadow hover:bg-red-700"
-                  >
-                    무료체험 예약
-                  </a>
-                  <a
-                    href="#programs"
-                    className="inline-flex items-center gap-2 rounded-full bg-white/90 text-black px-4 py-2 font-medium hover:brightness-95"
-                  >
-                    프로그램 보기
-                  </a>
+          {/* FOOTER */}
+          <footer id="contact" className="bg-white border-t">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <div className="md:flex md:justify-between md:items-start gap-8">
+                <div className="md:flex-1">
+                  <h4 className="text-lg font-bold">수원멀티짐</h4>
+                  <p className="mt-2 text-sm text-gray-600">장안구 유일 MMA 체육관 — 키즈반 · 성인반 · PT</p>
+                  <div className="mt-4 text-sm">
+                    <div>주소: (여기에 주소 입력)</div>
+                    <div className="mt-1">연락처: 010-XXXX-XXXX</div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* PROGRAMS */}
-        <section id="programs" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-2xl font-bold">프로그램</h2>
-          <p className="mt-2 text-sm text-gray-600">키즈반 · 성인반 · 1:1 PT까지, 체계적인 커리큘럼</p>
-
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 - Kids */}
-            <article className="border rounded-xl p-5 hover:shadow-md transition">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">키즈반 (초3 ~ 중1)</h3>
-                <span className="text-xs text-gray-500">월~금 운영</span>
-              </div>
-              <p className="mt-3 text-sm text-gray-600">특공무술 + 주짓수 중심. 기초 체력과 자신감 향상.</p>
-
-              <div className="mt-4">
-                <div className="text-sm font-medium">시간</div>
-                <ul className="mt-2 text-sm leading-7">
-                  <li>16:00 ~ 16:50</li>
-                  <li>18:00 ~ 18:50</li>
-                  <li>20:00 ~ 20:50</li>
-                </ul>
-              </div>
-            </article>
-
-            {/* Card 2 - Adult */}
-            <article className="border rounded-xl p-5 hover:shadow-md transition">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">성인반 (중2 ~ 성인)</h3>
-                <span className="text-xs text-gray-500">월~금 운영</span>
-              </div>
-              <p className="mt-3 text-sm text-gray-600">MMA + 주짓수로 실전과 기술을 동시에 수련.</p>
-
-              <div className="mt-4">
-                <div className="text-sm font-medium">시간</div>
-                <ul className="mt-2 text-sm leading-7">
-                  <li>오전 10:30 ~ 11:30</li>
-                  <li>오후 20:00 ~ 21:00</li>
-                  <li>오후 21:30 ~ 22:30</li>
-                </ul>
-
-                <div className="mt-3 text-sm">
-                  <div className="font-medium">주 수업</div>
-                  <ul className="mt-1 text-sm text-gray-600">
-                    <li>월/수/금: 주짓수</li>
-                    <li>화/목: 종합격투기 (MMA)</li>
-                  </ul>
-                </div>
-              </div>
-            </article>
-
-            {/* Card 3 - PT */}
-            <article className="border rounded-xl p-5 hover:shadow-md transition flex flex-col justify-between">
-              <div>
-                <h3 className="text-lg font-semibold">종합격투기 PT</h3>
-                <p className="mt-3 text-sm text-gray-600">1:1 맞춤 트레이닝으로 목표에 빠르게 도달하세요.</p>
-
-                <div className="mt-4 text-sm">
-                  <div className="font-medium">예약</div>
-                  <div className="mt-1 text-gray-600">1:1 PT는 시간 조율로 진행됩니다. 문의 주세요.</div>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <a href="#contact" className="inline-block w-full text-center rounded-full border px-4 py-2 text-sm font-semibold hover:bg-black/5">문의하기</a>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        {/* SCHEDULE (세로 정렬) */}
-        <section id="schedule" className="bg-gray-50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            <h2 className="text-2xl font-bold">수업 시간표</h2>
-            <p className="mt-2 text-sm text-gray-600">모바일에 최적화된 세로형 시간표</p>
-
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-5 bg-white border rounded-lg">
-                <h3 className="font-semibold">키즈반 (초3~중1) — 월~금 운영</h3>
-                <ul className="mt-3 text-sm leading-8">
-                  <li>🕓 16:00 ~ 16:50</li>
-                  <li>🕓 18:00 ~ 18:50</li>
-                </ul>
-                <div className="mt-3 text-sm text-gray-600">주 수업: 특공무술 + 주짓수</div>
-              </div>
-
-              <div className="p-5 bg-white border rounded-lg">
-                <h3 className="font-semibold">성인반 (중2~성인) — 월~금 운영</h3>
-                <ul className="mt-3 text-sm leading-8">
-                  <li>🕓 오전 10:30 ~ 11:30</li>
-                  <li>🕓 오후 20:00 ~ 21:00</li>
-                  <li>🕓 오후 21:30 ~ 22:30</li>
-                </ul>
-
-                <div className="mt-3 text-sm">
-                  <div className="font-medium">주 수업</div>
-                  <ul className="text-gray-600 mt-1 leading-7 text-sm">
-                    <li>월/수/금: 주짓수</li>
-                    <li>화/목: 종합격투기 MMA</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA / Reservation block */}
-        <section id="naver-reserve" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="rounded-xl bg-gradient-to-r from-black/90 to-gray-800 text-white p-8 md:flex md:items-center md:justify-between">
-            <div>
-              <h3 className="text-xl font-bold">무료체험 신청</h3>
-              <p className="mt-2 text-sm text-gray-200">네이버 예약으로 간편하게 예약하세요. 키즈반/성인반 선택 가능.</p>
-            </div>
-            <div className="mt-6 md:mt-0">
-              <a
-                href="https://booking.naver.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block rounded-full bg-red-600 px-5 py-3 font-semibold hover:bg-red-700"
-              >
-                네이버 예약으로 가기
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* CONTACT / FOOTER */}
-        <footer id="contact" className="bg-white border-t">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="md:flex md:justify-between md:items-start gap-8">
-              <div className="md:flex-1">
-                <h4 className="text-lg font-bold">수원멀티짐</h4>
-                <p className="mt-2 text-sm text-gray-600">장안구 유일 MMA 체육관 — 키즈반 · 성인반 · PT</p>
-
-                <div className="mt-4 text-sm">
-                  <div>주소: (여기에 주소 입력)</div>
-                  <div className="mt-1">연락처: 010-XXXX-XXXX</div>
-                </div>
-              </div>
-
-              <div className="md:w-72 mt-6 md:mt-0">
-                <h5 className="text-sm font-semibold">수업 안내</h5>
-                <ul className="mt-3 text-sm text-gray-600 leading-7">
-                  <li>키즈반: 초3~중1 — 16:00, 18:00, 20:00</li>
-                  <li>성인반: 중2~성인 — 10:30, 20:00, 21:30</li>
-                  <li>PT: 1:1 시간 조율</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-8 text-sm text-gray-500">© 수원멀티짐</div>
-          </div>
-        </footer>
-      </main>
-    </div>
-  );
-}
+                <div className="md:w-72 mt-6 md:mt-0">
+                  <h5 className="text-sm font-semibold">수업 안내</h5>
+                  <ul className="mt-3 text-sm text-gray-600
