@@ -1,15 +1,24 @@
 import React from "react";
 import Head from "next/head";
 
-// Tailwind CDN 사용, GitHub 웹에서 바로 배포 가능
 export default function SuwonMultiGymLanding() {
+  const programs = [
+    {title:'키즈반 (초3~중1)', schedule:['16:00 ~ 16:50','18:00 ~ 18:50','20:00 ~ 20:50'], desc:'특공무술 + 주짓수 중심. 기초 체력과 자신감 향상.', note:'월~금 운영'},
+    {title:'성인반 (중2~성인)', schedule:['10:30 ~ 11:30','20:00 ~ 21:00','21:30 ~ 22:30'], desc:'MMA + 주짓수로 실전과 기술을 동시에 수련.', note:'월~금 운영', extra:['월/수/금: 주짓수','화/목: 종합격투기 MMA']},
+    {title:'종합격투기 PT', schedule:['시간 개별 조율'], desc:'1:1 맞춤 트레이닝으로 목표에 빠르게 도달하세요.', note:''}
+  ];
+
+  const schedules = [
+    {title:'키즈반 (초3~중1) — 월~금 운영', times:['16:00 ~ 16:50','18:00 ~ 18:50'], note:'특공무술 + 주짓수'},
+    {title:'성인반 (중2~성인) — 월~금 운영', times:['10:30 ~ 11:30','20:00 ~ 21:00','21:30 ~ 22:30'], note:'월/수/금: 주짓수, 화/목: 종합격투기 MMA'}
+  ];
+
   return (
     <>
       <Head>
         <title>수원멀티짐 | 장안구 유일 MMA 체육관</title>
         <meta name="description" content="수원멀티짐 - 키즈반, 성인반, 1:1 PT, MMA와 주짓수 체육관" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
       </Head>
 
@@ -27,7 +36,7 @@ export default function SuwonMultiGymLanding() {
               </div>
               <nav className="hidden md:flex items-center gap-6 text-sm">
                 {['프로그램','#schedule','PT','#contact'].map((item, idx) => (
-                  <a key={idx} href={item === '프로그램' ? '#programs' : item} className="hover:text-black/70">{item}</a>
+                  <a key={idx} href={item==='프로그램'?'#programs':item} className="hover:text-black/70">{item}</a>
                 ))}
               </nav>
               <a href="#naver-reserve" className="hidden sm:inline-block rounded-full bg-red-600 text-white px-4 py-2 text-sm font-medium hover:bg-red-700">무료체험 예약</a>
@@ -38,7 +47,7 @@ export default function SuwonMultiGymLanding() {
         <main className="pt-20">
           {/* HERO */}
           <section className="relative h-[70vh] w-full overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1519222970733-f546218fa6d7?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="gym-hero" className="w-full h-full object-cover grayscale brightness-75" />
+            <img src="https://images.unsplash.com/photo-1519222970733-f546218fa6d7?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="gym-hero" className="w-full h-full object-cover grayscale brightness-75"/>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white max-w-2xl px-4">
                 <h1 className="text-3xl md:text-5xl font-extrabold">장안구 유일 MMA 체육관</h1>
@@ -56,11 +65,7 @@ export default function SuwonMultiGymLanding() {
             <h2 className="text-2xl font-bold">프로그램</h2>
             <p className="mt-2 text-sm text-gray-600">키즈반 · 성인반 · 1:1 PT</p>
             <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {title: '키즈반 (초3 ~ 중1)', schedule: ['16:00 ~ 16:50','18:00 ~ 18:50','20:00 ~ 20:50'], desc: '특공무술 + 주짓수 중심. 기초 체력과 자신감 향상.', note: '월~금 운영'},
-                {title: '성인반 (중2 ~ 성인)', schedule: ['10:30 ~ 11:30','20:00 ~ 21:00','21:30 ~ 22:30'], desc: 'MMA + 주짓수로 실전과 기술을 동시에 수련.', note: '월~금 운영', extra: ['월/수/금: 주짓수','화/목: 종합격투기 MMA']},
-                {title: '종합격투기 PT', schedule: ['시간 개별 조율'], desc: '1:1 맞춤 트레이닝으로 목표에 빠르게 도달하세요.', note: ''}
-              ].map((p,i)=>(
+              {programs.map((p,i)=>(
                 <article key={i} className="border rounded-xl p-5 hover:shadow-md transition flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between">
@@ -70,8 +75,8 @@ export default function SuwonMultiGymLanding() {
                     <p className="mt-3 text-sm text-gray-600">{p.desc}</p>
                     <div className="mt-4 text-sm">
                       <div className="font-medium">시간</div>
-                      <ul className="mt-1 text-sm leading-7">{p.schedule.map((t,i)=><li key={i}>{t}</li>)}</ul>
-                      {p.extra && <ul className="mt-1 text-gray-600 text-sm">{p.extra.map((e,i)=><li key={i}>{e}</li>)}</ul>}
+                      <ul className="mt-1 text-sm leading-7">{p.schedule.map((t,j)=><li key={j}>{t}</li>)}</ul>
+                      {p.extra && <ul className="mt-1 text-gray-600 text-sm">{p.extra.map((e,j)=><li key={j}>{e}</li>)}</ul>}
                     </div>
                   </div>
                   {p.title==='종합격투기 PT' && <a href="#contact" className="mt-4 inline-block w-full text-center rounded-full border px-4 py-2 text-sm font-semibold hover:bg-black/5">문의하기</a>}
@@ -86,8 +91,7 @@ export default function SuwonMultiGymLanding() {
               <h2 className="text-2xl font-bold">수업 시간표</h2>
               <p className="mt-2 text-sm text-gray-600">모바일에 최적화된 세로형 시간표</p>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[{title:'키즈반 (초3~중1) — 월~금 운영', times:['16:00 ~ 16:50','18:00 ~ 18:50'], note:'특공무술 + 주짓수'},
-                  {title:'성인반 (중2~성인) — 월~금 운영', times:['10:30 ~ 11:30','20:00 ~ 21:00','21:30 ~ 22:30'], note:'월/수/금: 주짓수, 화/목: 종합격투기 MMA'}].map((s,i)=>(
+                {schedules.map((s,i)=>(
                   <div key={i} className="p-5 bg-white border rounded-lg">
                     <h3 className="font-semibold">{s.title}</h3>
                     <ul className="mt-3 text-sm leading-8">{s.times.map((t,j)=><li key={j}>🕓 {t}</li>)}</ul>
@@ -125,4 +129,19 @@ export default function SuwonMultiGymLanding() {
                 </div>
                 <div className="md:w-72 mt-6 md:mt-0">
                   <h5 className="text-sm font-semibold">수업 안내</h5>
-                  <ul className="mt-3 text-sm text-gray-600
+                  <ul className="mt-3 text-sm text-gray-600 leading-7">
+                    <li>키즈반: 초3~중1 — 16:00, 18:00, 20:00</li>
+                    <li>성인반: 중2~성인 — 10:30, 20:00, 21:30</li>
+                    <li>PT: 1:1 시간 조율</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-8 text-sm text-gray-500">© 수원멀티짐</div>
+            </div>
+          </footer>
+        </main>
+      </div>
+    </>
+  );
+}
+
