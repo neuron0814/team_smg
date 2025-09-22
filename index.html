@@ -1,96 +1,239 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>TEAM SMG</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body, html { margin:0; padding:0; overflow:hidden; font-family:"Pretendard Variable","SUIT","Noto Sans KR",sans-serif; background:#111; color:white; height:100vh; scroll-behavior: smooth; }
-.section-wrapper { position:relative; width:100%; height:100vh; overflow:hidden; }
-.video-section, .ui-section { position:absolute; top:0; left:0; width:100%; height:100%; transition:opacity 0.8s ease, transform 0.8s ease; }
-.video-section video { width:100%; height:100%; object-fit:cover; }
-.enter { opacity:1; transform:translateY(0); pointer-events:auto; }
-.leave { opacity:0; transform:translateY(50px); pointer-events:none; }
-.ui-section { background:#111; padding:3rem 2rem; box-sizing:border-box; overflow-y:auto; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; }
-.ui-section section { display:none; position:relative; width:100%; max-width:600px; padding-top:4rem; text-align:center; animation:fadeInUp 0.6s ease; flex-shrink:0; }
-.ui-section section.active { display:flex; flex-direction:column; justify-content:flex-start; }
-@keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
-.arrow { position:absolute; left:50%; transform:translateX(-50%) rotate(90deg); font-size:3rem; color:white; cursor:pointer; opacity:0; animation:fadeArrow 2.5s infinite; bottom:160px; }
-@keyframes fadeArrow { 0%,100%{opacity:0;} 50%{opacity:1;} }
-.tab-button { flex:1 1 120px; text-align:center; border:1px solid white; padding:0.5rem 1rem; font-size:0.875rem; background:transparent; color:white; transition:all 0.3s; margin:0.25rem; border-radius:0.5rem; min-width:100px; }
-.tab-button.active { background:white; color:black; font-weight:600; }
-.home-button { margin-top:1rem; padding:0.5rem 1rem; border:1px solid white; background:transparent; color:white; cursor:pointer; border-radius:0.5rem; }
-.card { background:#1f1f1f; border:1px solid rgba(255,255,255,0.2); border-radius:0.75rem; padding:1rem; margin-bottom:1rem; width:100%; box-sizing:border-box; }
-h1 { font-size:clamp(1.5rem,5vw,3.5rem); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:1rem; }
-@media (max-width:768px){ .arrow{bottom:140px; font-size:2.5rem;} .ui-section { padding:2rem 1.5rem; } .tab-button { min-width:90px; font-size:0.8rem; padding:0.4rem 0.8rem; } h1 { font-size:clamp(1.2rem,6vw,3rem); } }
-@media (max-width:480px){ .arrow{bottom:120px; font-size:2rem;} .ui-section { padding:1.5rem 1rem; } .tab-button { min-width:80px; font-size:0.75rem; padding:0.3rem 0.6rem; } h1 { font-size:clamp(1rem,7vw,2.5rem); } }
-</style>
-</head>
-<body>
-<div class="section-wrapper">
-  <div class="video-section enter" id="video-section">
-    <video autoplay muted loop playsinline>
-      <source src="video.mp4" type="video/mp4">
-    </video>
-    <div class="arrow" id="scroll-arrow">&gt;&gt;&gt;</div>
-  </div>
-  <div class="ui-section leave" id="ui-section">
-    <section id="home" class="active">
-      <h1 class="font-extrabold">누구나 쉽게 배우는 MMA & 주짓수</h1>
-      <div class="flex flex-wrap justify-center gap-3" id="tab-buttons" role="tablist"></div>
-    </section>
-  </div>
-</div>
-<script>
-const tabs = [
-  { id:'coach', label:'👤 강사 소개', content:`<h2 class="text-2xl font-bold mb-4">강사 소개</h2><div class="card"><p class="font-semibold">관장 박수오</p><p>잘생김</p></div>` },
-  { id:'schedule', label:'🗓️ 시간표', content:`<h2 class="text-2xl font-bold mb-4">시간표</h2><div class="card">월요일: 주짓수 - AM 10:30, PM 9:30</div><div class="card">화요일: MMA - PM 9:30</div><div class="card">수요일: 주짓수 - AM 10:30, PM 9:30</div><div class="card">목요일: MMA - PM 9:30</div><div class="card">금요일: 스파링 - AM 10:30, PM 9:30</div>` },
-  { id:'price', label:'💳 등록비', content:`<h2 class="text-2xl font-bold mb-4">등록비</h2><div class="card">69억원</div>` },
-  { id:'facility', label:'🏋️ 시설', content:`<h2 class="text-2xl font-bold mb-4">시설</h2><div class="card">체육관</div>` },
-  { id:'map', label:'📍 오시는 길', content:`<h2 class="text-2xl font-bold mb-4">오시는 길</h2><iframe src="https://www.google.com/maps/embed?pb=!1m14!..." style="border:0;" width="100%" height="200" allowfullscreen loading="lazy"></iframe>` },
-  { id:'trial', label:'🎟️ 무료 체험', content:`<h2 class="text-2xl font-bold mb-4">무료 체험</h2><p class="mb-4">미리 연락주셈</p>` }
-];
-const videoSection = document.getElementById('video-section');
-const uiSection = document.getElementById('ui-section');
-const scrollArrow = document.getElementById('scroll-arrow');
-let switched = false;
-let scrollTimeout;
-function switchSection(toUI){
-  switched = toUI;
-  videoSection.classList.toggle('enter', !toUI);
-  videoSection.classList.toggle('leave', toUI);
-  uiSection.classList.toggle('enter', toUI);
-  uiSection.classList.toggle('leave', !toUI);
+import React from "react";
+
+// 수원멀티짐 - 단일 파일 React 컴포넌트
+// Tailwind CSS가 셋업되어 있는 환경에서 바로 사용 가능합니다.
+// 사용: 페이지에 <SuwonMultiGymLanding /> 렌더링
+
+export default function SuwonMultiGymLanding() {
+  return (
+    <div className="min-h-screen text-gray-900 antialiased bg-white">
+      {/* NAVBAR */}
+      <header className="fixed inset-x-0 top-0 z-40 bg-white/80 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-md bg-black flex items-center justify-center text-white font-bold">SM</div>
+              <div>
+                <div className="text-sm font-semibold">수원멀티짐</div>
+                <div className="text-xs text-gray-500 -mt-0.5">장안구 유일 MMA 체육관</div>
+              </div>
+            </div>
+
+            <nav className="hidden md:flex items-center gap-6 text-sm">
+              <a href="#programs" className="hover:text-black/70">프로그램</a>
+              <a href="#schedule" className="hover:text-black/70">시간표</a>
+              <a href="#pt" className="hover:text-black/70">PT</a>
+              <a href="#contact" className="hover:text-black/70">오시는 길</a>
+            </nav>
+
+            <div className="flex items-center gap-3">
+              <a
+                href="#naver-reserve"
+                className="hidden sm:inline-block rounded-full bg-red-600 text-white px-4 py-2 text-sm font-medium hover:bg-red-700"
+              >
+                무료체험 예약
+              </a>
+              <button className="md:hidden inline-flex items-center justify-center p-2 rounded-md border">
+                <span className="sr-only">Open menu</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main className="pt-20">
+        {/* HERO */}
+        <section className="relative">
+          <div className="h-[60vh] md:h-[70vh] w-full overflow-hidden relative">
+            {/* 배경 비디오/이미지 자리 */}
+            <div className="absolute inset-0">
+              <img
+                src="https://images.unsplash.com/photo-1519222970733-f546218fa6d7?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
+                alt="gym-hero"
+                className="w-full h-full object-cover grayscale brightness-75"
+              />
+            </div>
+
+            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+              <div className="text-white max-w-2xl">
+                <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">장안구 유일 MMA 체육관</h1>
+                <p className="mt-3 text-lg md:text-xl opacity-90">수원멀티짐에서 함께 강해집시다.</p>
+
+                <div className="mt-6 flex gap-3 flex-wrap">
+                  <a
+                    href="#naver-reserve"
+                    className="inline-flex items-center gap-2 rounded-full bg-red-600 px-4 py-2 font-semibold shadow hover:bg-red-700"
+                  >
+                    무료체험 예약
+                  </a>
+                  <a
+                    href="#programs"
+                    className="inline-flex items-center gap-2 rounded-full bg-white/90 text-black px-4 py-2 font-medium hover:brightness-95"
+                  >
+                    프로그램 보기
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* PROGRAMS */}
+        <section id="programs" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <h2 className="text-2xl font-bold">프로그램</h2>
+          <p className="mt-2 text-sm text-gray-600">키즈반 · 성인반 · 1:1 PT까지, 체계적인 커리큘럼</p>
+
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1 - Kids */}
+            <article className="border rounded-xl p-5 hover:shadow-md transition">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">키즈반 (초3 ~ 중1)</h3>
+                <span className="text-xs text-gray-500">월~금 운영</span>
+              </div>
+              <p className="mt-3 text-sm text-gray-600">특공무술 + 주짓수 중심. 기초 체력과 자신감 향상.</p>
+
+              <div className="mt-4">
+                <div className="text-sm font-medium">시간</div>
+                <ul className="mt-2 text-sm leading-7">
+                  <li>16:00 ~ 16:50</li>
+                  <li>18:00 ~ 18:50</li>
+                  <li>20:00 ~ 20:50</li>
+                </ul>
+              </div>
+            </article>
+
+            {/* Card 2 - Adult */}
+            <article className="border rounded-xl p-5 hover:shadow-md transition">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">성인반 (중2 ~ 성인)</h3>
+                <span className="text-xs text-gray-500">월~금 운영</span>
+              </div>
+              <p className="mt-3 text-sm text-gray-600">MMA + 주짓수로 실전과 기술을 동시에 수련.</p>
+
+              <div className="mt-4">
+                <div className="text-sm font-medium">시간</div>
+                <ul className="mt-2 text-sm leading-7">
+                  <li>오전 10:30 ~ 11:30</li>
+                  <li>오후 20:00 ~ 21:00</li>
+                  <li>오후 21:30 ~ 22:30</li>
+                </ul>
+
+                <div className="mt-3 text-sm">
+                  <div className="font-medium">주 수업</div>
+                  <ul className="mt-1 text-sm text-gray-600">
+                    <li>월/수/금: 주짓수</li>
+                    <li>화/목: 종합격투기 (MMA)</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            {/* Card 3 - PT */}
+            <article className="border rounded-xl p-5 hover:shadow-md transition flex flex-col justify-between">
+              <div>
+                <h3 className="text-lg font-semibold">종합격투기 PT</h3>
+                <p className="mt-3 text-sm text-gray-600">1:1 맞춤 트레이닝으로 목표에 빠르게 도달하세요.</p>
+
+                <div className="mt-4 text-sm">
+                  <div className="font-medium">예약</div>
+                  <div className="mt-1 text-gray-600">1:1 PT는 시간 조율로 진행됩니다. 문의 주세요.</div>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <a href="#contact" className="inline-block w-full text-center rounded-full border px-4 py-2 text-sm font-semibold hover:bg-black/5">문의하기</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        {/* SCHEDULE (세로 정렬) */}
+        <section id="schedule" className="bg-gray-50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <h2 className="text-2xl font-bold">수업 시간표</h2>
+            <p className="mt-2 text-sm text-gray-600">모바일에 최적화된 세로형 시간표</p>
+
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-5 bg-white border rounded-lg">
+                <h3 className="font-semibold">키즈반 (초3~중1) — 월~금 운영</h3>
+                <ul className="mt-3 text-sm leading-8">
+                  <li>🕓 16:00 ~ 16:50</li>
+                  <li>🕓 18:00 ~ 18:50</li>
+                </ul>
+                <div className="mt-3 text-sm text-gray-600">주 수업: 특공무술 + 주짓수</div>
+              </div>
+
+              <div className="p-5 bg-white border rounded-lg">
+                <h3 className="font-semibold">성인반 (중2~성인) — 월~금 운영</h3>
+                <ul className="mt-3 text-sm leading-8">
+                  <li>🕓 오전 10:30 ~ 11:30</li>
+                  <li>🕓 오후 20:00 ~ 21:00</li>
+                  <li>🕓 오후 21:30 ~ 22:30</li>
+                </ul>
+
+                <div className="mt-3 text-sm">
+                  <div className="font-medium">주 수업</div>
+                  <ul className="text-gray-600 mt-1 leading-7 text-sm">
+                    <li>월/수/금: 주짓수</li>
+                    <li>화/목: 종합격투기 MMA</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA / Reservation block */}
+        <section id="naver-reserve" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="rounded-xl bg-gradient-to-r from-black/90 to-gray-800 text-white p-8 md:flex md:items-center md:justify-between">
+            <div>
+              <h3 className="text-xl font-bold">무료체험 신청</h3>
+              <p className="mt-2 text-sm text-gray-200">네이버 예약으로 간편하게 예약하세요. 키즈반/성인반 선택 가능.</p>
+            </div>
+            <div className="mt-6 md:mt-0">
+              <a
+                href="https://booking.naver.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block rounded-full bg-red-600 px-5 py-3 font-semibold hover:bg-red-700"
+              >
+                네이버 예약으로 가기
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* CONTACT / FOOTER */}
+        <footer id="contact" className="bg-white border-t">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="md:flex md:justify-between md:items-start gap-8">
+              <div className="md:flex-1">
+                <h4 className="text-lg font-bold">수원멀티짐</h4>
+                <p className="mt-2 text-sm text-gray-600">장안구 유일 MMA 체육관 — 키즈반 · 성인반 · PT</p>
+
+                <div className="mt-4 text-sm">
+                  <div>주소: (여기에 주소 입력)</div>
+                  <div className="mt-1">연락처: 010-XXXX-XXXX</div>
+                </div>
+              </div>
+
+              <div className="md:w-72 mt-6 md:mt-0">
+                <h5 className="text-sm font-semibold">수업 안내</h5>
+                <ul className="mt-3 text-sm text-gray-600 leading-7">
+                  <li>키즈반: 초3~중1 — 16:00, 18:00, 20:00</li>
+                  <li>성인반: 중2~성인 — 10:30, 20:00, 21:30</li>
+                  <li>PT: 1:1 시간 조율</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-8 text-sm text-gray-500">© 수원멀티짐</div>
+          </div>
+        </footer>
+      </main>
+    </div>
+  );
 }
-scrollArrow.addEventListener('click', ()=>switchSection(true));
-window.addEventListener('wheel', e=>{ clearTimeout(scrollTimeout); scrollTimeout = setTimeout(()=>switchSection(e.deltaY>0), 50); });
-let touchStartY = 0;
-window.addEventListener('touchstart', e=>touchStartY=e.touches[0].clientY);
-window.addEventListener('touchend', e=>{ const touchEndY=e.changedTouches[0].clientY; if(touchStartY-touchEndY>50) switchSection(true); else if(touchEndY-touchStartY>50) switchSection(false); });
-function createTabs(){
-  const tabContainer = document.getElementById('tab-buttons');
-  tabs.forEach(tab=>{
-    const btn = document.createElement('button');
-    btn.className='tab-button';
-    btn.innerText = tab.label;
-    btn.addEventListener('click', ()=>showTab(tab.id, btn));
-    tabContainer.appendChild(btn);
-    const section = document.createElement('section');
-    section.id = tab.id;
-    section.innerHTML = tab.content + `<button class="home-button" onclick="showTab('home')">홈으로</button>`;
-    uiSection.appendChild(section);
-  });
-}
-function showTab(id, btn=null){
-  document.querySelectorAll('#ui-section > section').forEach(sec=>sec.classList.remove('active'));
-  const target = document.getElementById(id);
-  if(target) { target.classList.add('active'); uiSection.scrollTop = 0; }
-  document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-}
-setTimeout(()=>{scrollArrow.style.opacity=1;},500);
-createTabs();
-</script>
-</body>
-</html>
